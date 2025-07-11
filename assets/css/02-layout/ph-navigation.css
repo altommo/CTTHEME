@@ -1,0 +1,858 @@
+/**
+ * PH-Style Navigation Layout
+ * CustomTube Theme - Modular CSS Architecture
+ * 
+ * Fixed top navigation with three-section layout following theme conventions
+ * Left: Hamburger + Logo | Center: Primary Links | Right: Search + Theme + Auth
+ * 
+ * Uses theme's existing CSS custom properties for consistency
+ */
+
+/* ==========================================
+   PH NAVIGATION STRUCTURE
+   ========================================== */
+
+.ph-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: var(--nav-height);
+    background-color: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+    z-index: var(--z-sticky);
+    box-shadow: var(--shadow-base);
+    transition: var(--transition-colors), var(--transition-shadow);
+}
+
+.ph-nav__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 var(--spacing-4);
+    gap: var(--spacing-4);
+}
+
+.ph-container {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 var(--spacing-4);
+    width: 100%;
+}
+
+/* ==========================================
+   LEFT SECTION - HAMBURGER + LOGO
+   ========================================== */
+
+.ph-nav__left {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-4);
+    flex-shrink: 0;
+}
+
+/* Hamburger Menu Button */
+.ph-nav__burger {
+    display: none; /* Hidden on desktop, shown on mobile */
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    color: var(--color-text);
+    cursor: pointer;
+    border-radius: var(--radius-base);
+    transition: var(--transition-colors);
+    padding: var(--spacing-2);
+}
+
+.ph-nav__burger:hover {
+    background-color: var(--color-surface-alt);
+    border-color: var(--color-primary);
+}
+
+.ph-nav__burger svg {
+    width: 24px;
+    height: 24px;
+}
+
+/* Logo */
+.ph-nav__logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    font-family: var(--font-family-heading);
+    transition: var(--transition-transform);
+}
+
+.ph-nav__logo:hover {
+    transform: scale(1.02);
+    text-decoration: none;
+}
+
+/* Two-tone logo styling */
+.logo-main {
+    color: var(--color-text);
+    font-weight: var(--font-weight-bold);
+}
+
+.logo-accent {
+    background-color: var(--color-primary);
+    color: #ffffff;
+    padding: var(--spacing-1) var(--spacing-3);
+    border-radius: var(--radius-full);
+    margin-left: var(--spacing-1);
+    font-size: 0.9em;
+    font-weight: var(--font-weight-bold);
+}
+
+/* Custom logo image support */
+.ph-nav__logo img,
+.ph-nav__logo .custom-logo {
+    max-height: 36px;
+    width: auto;
+}
+
+/* ==========================================
+   CENTER SECTION - PRIMARY NAVIGATION LINKS
+   ========================================== */
+
+.ph-nav__links {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-6);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex: 1;
+    justify-content: center;
+}
+
+.ph-nav__links li {
+    margin: 0;
+    position: relative;
+}
+
+.ph-nav__links a {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-1);
+    padding: var(--spacing-3) var(--spacing-4);
+    color: var(--color-text);
+    text-decoration: none;
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-radius: var(--radius-base);
+    transition: var(--transition-colors);
+    white-space: nowrap;
+}
+
+.ph-nav__links a:hover,
+.ph-nav__links a:focus {
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-decoration-color: var(--color-primary);
+    text-underline-offset: 4px;
+}
+
+.ph-nav__links a.is-active {
+    color: var(--color-primary);
+    background-color: rgba(255, 64, 87, 0.1);
+}
+
+/* Dropdown indicators */
+.ph-nav__links .has-dropdown a {
+    position: relative;
+}
+
+.dropdown-icon {
+    width: 12px;
+    height: 12px;
+    margin-left: var(--spacing-1);
+    transition: var(--transition-transform);
+}
+
+.has-dropdown:hover .dropdown-icon {
+    transform: rotate(180deg);
+}
+
+/* ==========================================
+   RIGHT SECTION - SEARCH + THEME + AUTH
+   ========================================== */
+
+.ph-nav__right {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+    flex-shrink: 0;
+}
+
+/* Search Form */
+.ph-nav__search {
+    position: relative;
+    width: 280px;
+}
+
+.ph-nav__search input {
+    width: 100%;
+    height: 36px;
+    padding: 0 var(--spacing-10) 0 var(--spacing-3);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    font-size: var(--font-size-sm);
+    transition: var(--transition-colors);
+}
+
+.ph-nav__search input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px rgba(255, 64, 87, 0.2);
+}
+
+.ph-nav__search input::placeholder {
+    color: var(--color-text-muted);
+}
+
+.ph-nav__search button {
+    position: absolute;
+    right: var(--spacing-2);
+    top: 50%;
+    transform: translateY(-50%);
+    width: 28px;
+    height: 28px;
+    border: none;
+    background: transparent;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    border-radius: var(--radius-base);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-colors);
+}
+
+.ph-nav__search button:hover {
+    color: var(--color-primary);
+    background-color: var(--color-surface-alt);
+}
+
+.ph-nav__search button svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* Theme Toggle */
+.ph-nav__theme-toggle {
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-colors);
+    position: relative;
+}
+
+.ph-nav__theme-toggle:hover {
+    background-color: var(--color-surface-alt);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+.ph-nav__theme-toggle svg {
+    width: 20px;
+    height: 20px;
+    transition: var(--transition-opacity);
+}
+
+/* Theme icon states */
+.theme-icon--sun {
+    display: block;
+}
+
+.theme-icon--moon {
+    display: none;
+}
+
+[data-theme="dark"] .theme-icon--sun,
+.dark-mode .theme-icon--sun {
+    display: none;
+}
+
+[data-theme="dark"] .theme-icon--moon,
+.dark-mode .theme-icon--moon {
+    display: block;
+}
+
+/* Authentication Buttons */
+.ph-nav__auth {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+}
+
+.ph-btn {
+    padding: var(--spacing-2) var(--spacing-4);
+    border-radius: var(--radius-full);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-sm);
+    text-decoration: none;
+    transition: var(--transition-colors);
+    cursor: pointer;
+    border: 1px solid transparent;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 80px;
+}
+
+.ph-btn--outline {
+    color: var(--color-text);
+    background-color: transparent;
+    border-color: var(--color-border);
+}
+
+.ph-btn--outline:hover {
+    background-color: var(--color-surface-alt);
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+    text-decoration: none;
+}
+
+.ph-btn--solid {
+    color: #ffffff;
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+.ph-btn--solid:hover {
+    background-color: var(--color-primary-dark);
+    border-color: var(--color-primary-dark);
+    text-decoration: none;
+}
+
+/* User Menu (Logged In) */
+.ph-nav__user-menu {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+}
+
+.ph-nav__notifications {
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-colors);
+    position: relative;
+}
+
+.ph-nav__notifications:hover {
+    background-color: var(--color-surface-alt);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+.ph-nav__user-avatar {
+    position: relative;
+    cursor: pointer;
+}
+
+.ph-nav__user-avatar img {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-full);
+    border: 2px solid transparent;
+    transition: var(--transition-colors);
+}
+
+.ph-nav__user-avatar:hover img {
+    border-color: var(--color-primary);
+}
+
+/* User Dropdown */
+.ph-nav__user-dropdown {
+    position: absolute;
+    top: calc(100% + var(--spacing-2));
+    right: 0;
+    min-width: 200px;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    padding: var(--spacing-2);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: opacity var(--duration-200) var(--ease-out),
+                visibility var(--duration-200) var(--ease-out),
+                transform var(--duration-200) var(--ease-out);
+    z-index: var(--z-dropdown);
+}
+
+.ph-nav__user-avatar:hover .ph-nav__user-dropdown,
+.ph-nav__user-dropdown.is-active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.ph-nav__user-dropdown a {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    padding: var(--spacing-3);
+    color: var(--color-text);
+    text-decoration: none;
+    border-radius: var(--radius-base);
+    transition: var(--transition-colors);
+    font-size: var(--font-size-sm);
+    text-transform: none;
+    letter-spacing: normal;
+}
+
+.ph-nav__user-dropdown a:hover {
+    background-color: var(--color-surface-alt);
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.ph-nav__user-dropdown svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+}
+
+/* ==========================================
+   DROPDOWN MENUS
+   ========================================== */
+
+.ph-nav-dropdown {
+    position: absolute;
+    top: calc(100% + var(--spacing-2));
+    left: 0;
+    min-width: 200px;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    padding: var(--spacing-2);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: opacity var(--duration-200) var(--ease-out),
+                visibility var(--duration-200) var(--ease-out),
+                transform var(--duration-200) var(--ease-out);
+    z-index: var(--z-dropdown);
+}
+
+.ph-nav__links .has-dropdown:hover .ph-nav-dropdown,
+.ph-nav__links .has-dropdown.has-dropdown--open .ph-nav-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.ph-nav-dropdown ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.ph-nav-dropdown li {
+    margin: 0;
+}
+
+.ph-nav-dropdown a {
+    display: block;
+    padding: var(--spacing-3);
+    color: var(--color-text);
+    text-decoration: none;
+    border-radius: var(--radius-base);
+    transition: var(--transition-colors);
+    font-size: var(--font-size-sm);
+    text-transform: none;
+    letter-spacing: normal;
+}
+
+.ph-nav-dropdown a:hover {
+    background-color: var(--color-surface-alt);
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+/* ==========================================
+   RESPONSIVE BEHAVIOR
+   ========================================== */
+
+/* Desktop - Full Navigation */
+@media (min-width: 1024px) {
+    .ph-nav__burger {
+        display: none;
+    }
+    
+    .ph-nav__links {
+        display: flex;
+    }
+}
+
+/* Tablet - Condensed Navigation */
+@media (max-width: 1023px) and (min-width: 768px) {
+    .ph-nav__burger {
+        display: flex;
+    }
+    
+    .ph-nav__links {
+        display: none; /* Hidden, moved to mobile menu */
+    }
+    
+    .ph-nav__search {
+        width: 220px;
+    }
+    
+    .ph-nav__inner {
+        gap: var(--spacing-3);
+    }
+}
+
+/* Mobile - Minimal Navigation */
+@media (max-width: 767px) {
+    .ph-nav {
+        height: 50px;
+    }
+    
+    .ph-nav__burger {
+        display: flex;
+    }
+    
+    .ph-nav__links {
+        display: none;
+    }
+    
+    .ph-nav__search {
+        width: 160px;
+    }
+    
+    .ph-nav__search input {
+        height: 32px;
+        font-size: var(--font-size-xs);
+    }
+    
+    .ph-nav__right {
+        gap: var(--spacing-2);
+    }
+    
+    .ph-nav__theme-toggle,
+    .ph-nav__notifications {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .ph-nav__user-avatar img {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .ph-btn {
+        padding: var(--spacing-1) var(--spacing-3);
+        font-size: var(--font-size-xs);
+        min-width: 60px;
+    }
+    
+    .ph-nav__inner {
+        padding: 0 var(--spacing-3);
+        gap: var(--spacing-2);
+    }
+}
+
+/* Very Small Screens */
+@media (max-width: 480px) {
+    .ph-nav__search {
+        width: 120px;
+    }
+    
+    .ph-nav__auth {
+        display: none; /* Hide auth buttons on very small screens */
+    }
+    
+    .ph-nav__right {
+        gap: var(--spacing-1);
+    }
+}
+
+/* ==========================================
+   MOBILE MENU OVERLAY
+   ========================================== */
+
+.ph-nav-mobile-overlay {
+    position: fixed;
+    top: var(--nav-height);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: calc(var(--z-modal-backdrop) - 10);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--duration-300) var(--ease-out),
+                visibility var(--duration-300) var(--ease-out);
+}
+
+.ph-nav-mobile-overlay.is-active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.ph-nav-mobile-menu {
+    position: fixed;
+    top: var(--nav-height);
+    left: -100%;
+    width: 280px;
+    height: calc(100vh - var(--nav-height));
+    background-color: var(--color-surface);
+    border-right: 1px solid var(--color-border);
+    z-index: calc(var(--z-modal) - 10);
+    transition: left var(--duration-300) var(--ease-out);
+    overflow-y: auto;
+}
+
+.ph-nav-mobile-menu.is-active {
+    left: 0;
+}
+
+.ph-nav-mobile-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: var(--spacing-4);
+}
+
+.ph-nav-mobile-menu li {
+    margin-bottom: var(--spacing-2);
+}
+
+.ph-nav-mobile-menu a {
+    display: block;
+    padding: var(--spacing-4);
+    color: var(--color-text);
+    text-decoration: none;
+    font-weight: var(--font-weight-medium);
+    border-radius: var(--radius-base);
+    transition: var(--transition-colors);
+}
+
+.ph-nav-mobile-menu a:hover {
+    background-color: var(--color-surface-alt);
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+/* ==========================================
+   MOBILE MENU BASE STYLES
+   ========================================== */
+
+/* Mobile menu base state - hidden by default */
+.ph-nav-mobile-menu {
+    display: none;
+    position: fixed;
+    top: var(--nav-height);
+    left: -100%;
+    width: 280px;
+    height: calc(100vh - var(--nav-height));
+    background-color: var(--color-surface);
+    border-right: 1px solid var(--color-border);
+    z-index: calc(var(--z-modal) - 10);
+    transition: left var(--duration-300) var(--ease-out);
+    overflow-y: auto;
+    transform: translateX(-100%);
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Mobile overlay base state - hidden by default */
+.ph-nav-mobile-overlay {
+    display: none;
+    position: fixed;
+    top: var(--nav-height);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: calc(var(--z-modal-backdrop) - 10);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--duration-300) var(--ease-out),
+                visibility var(--duration-300) var(--ease-out);
+    pointer-events: none;
+}
+
+/* Force-show state - when menu is opened */
+.ph-nav-mobile-menu.force-show {
+    display: block;
+    transform: translateX(0);
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    left: 0;
+}
+
+.ph-nav-mobile-overlay.force-show {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+/* Mobile submenu collapsed by default */
+.ph-nav-mobile-submenu {
+    display: none;
+}
+
+.has-dropdown.is-open .ph-nav-mobile-submenu {
+    display: block;
+}
+
+/* ==========================================
+   DRAWER BACKGROUNDS - THEME AWARE
+   ========================================== */
+
+/* Light theme mobile menu backgrounds */
+body[data-theme="light"] .ph-nav-mobile-menu.force-show {
+    background-color: var(--lc-bg-light) !important;
+    color: var(--lc-text-light) !important;
+}
+
+body[data-theme="light"] .ph-nav-mobile-content {
+    background-color: var(--lc-bg-light) !important;
+}
+
+/* Dark theme mobile menu backgrounds */
+body[data-theme="dark"] .ph-nav-mobile-menu.force-show,
+body.dark-mode .ph-nav-mobile-menu.force-show {
+    background-color: var(--lc-surface) !important;
+    color: var(--lc-text-primary) !important;
+}
+
+body[data-theme="dark"] .ph-nav-mobile-content,
+body.dark-mode .ph-nav-mobile-content {
+    background-color: var(--lc-surface) !important;
+}
+
+/* Fallback when no theme attribute is set (default to dark) */
+body:not([data-theme]) .ph-nav-mobile-menu.force-show {
+    background-color: var(--lc-surface) !important;
+    color: var(--lc-text-primary) !important;
+}
+
+body:not([data-theme]) .ph-nav-mobile-content {
+    background-color: var(--lc-surface) !important;
+}
+
+/* Additional selector support for data-current-mode */
+html[data-current-mode="light"] .ph-nav-mobile-menu.force-show {
+    background-color: var(--lc-bg-light) !important;
+    color: var(--lc-text-light) !important;
+}
+
+html[data-current-mode="dark"] .ph-nav-mobile-menu.force-show {
+    background-color: var(--lc-surface) !important;
+    color: var(--lc-text-primary) !important;
+}
+
+/* Mobile drawer overlay backgrounds */
+body[data-theme="light"] .ph-nav-mobile-overlay.force-show,
+html[data-current-mode="light"] .ph-nav-mobile-overlay.force-show {
+    background-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+body[data-theme="dark"] .ph-nav-mobile-overlay.force-show,
+body.dark-mode .ph-nav-mobile-overlay.force-show,
+html[data-current-mode="dark"] .ph-nav-mobile-overlay.force-show {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+body:not([data-theme]) .ph-nav-mobile-overlay.force-show {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+/* ==========================================
+   BODY PADDING FOR FIXED NAVIGATION
+   ========================================== */
+
+/* Add top padding to body to account for fixed navigation */
+body.ph-nav-enabled {
+    padding-top: 140px; /* Adjusted to account for both header (70px) and nav (70px) */
+}
+
+@media (max-width: 767px) {
+    body.ph-nav-enabled {
+        padding-top: 50px;
+    }
+}
+
+/* ==========================================
+   ACCESSIBILITY ENHANCEMENTS
+   ========================================== */
+
+/* Focus states */
+.ph-nav button:focus,
+.ph-nav a:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* Screen reader only text */
+.ph-nav-sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* High contrast support */
+@media (prefers-contrast: high) {
+    .ph-nav {
+        border-bottom-width: 2px;
+    }
+    
+    .ph-nav__user-dropdown,
+    .ph-nav-dropdown {
+        border-width: 2px;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    .ph-nav,
+    .ph-nav__user-dropdown,
+    .ph-nav-dropdown,
+    .ph-nav-mobile-menu,
+    .ph-nav-mobile-overlay,
+    .dropdown-icon {
+        transition: none;
+    }
+}

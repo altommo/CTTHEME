@@ -1,0 +1,61 @@
+/**
+ * Utility Bar Layout
+ * CustomTube Theme - Layout Layer
+ *
+ * Thin bar above the main header for affiliate links or quick navigation.
+ */
+
+.utility-bar {
+  background-color: var(--color-black); /* Dark background */
+  height: var(--utility-bar-height); /* Use variable for height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-6); /* 24px gap */
+  padding: 0 var(--spacing-4); /* Horizontal padding */
+  overflow: hidden; /* Hide overflow if links are too many */
+  flex-wrap: nowrap; /* Keep links on a single line */
+  /* Removed positioning as it's now handled by header-stack */
+}
+
+.utility-link {
+  font-size: var(--font-size-xs); /* 0.75rem */
+  text-transform: uppercase;
+  color: var(--color-text-muted); /* #777 */
+  padding: var(--spacing-1) var(--spacing-2); /* 4px 8px */
+  text-decoration: none;
+  white-space: nowrap; /* Prevent wrapping */
+  transition: color var(--duration-150) ease-in-out;
+}
+
+.utility-link:hover {
+  color: var(--color-white); /* #fff */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .utility-bar {
+    height: auto; /* Allow height to adjust */
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    padding: var(--spacing-1) var(--spacing-2); /* Smaller padding */
+    gap: var(--spacing-3); /* Smaller gap */
+  }
+
+  .utility-link {
+    font-size: 0.65rem; /* Even smaller font size */
+    padding: 2px 4px;
+  }
+}
+
+@media (max-width: 480px) {
+  .utility-bar {
+    justify-content: flex-start; /* Align left if too many links */
+    overflow-x: auto; /* Enable horizontal scrolling */
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Hide scrollbar for Firefox */
+  }
+
+  .utility-bar::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for Webkit browsers */
+  }
+}

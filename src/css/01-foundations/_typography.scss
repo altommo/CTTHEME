@@ -1,0 +1,290 @@
+/**
+ * Typography System
+ * CustomTube Theme - Foundation Layer
+ * 
+ * Typography scales, text utilities, and reading experience
+ */
+
+/* ==========================================
+   FONT LOADING & OPTIMIZATION
+   ========================================== */
+
+/* Import Google Fonts - Proper way to load external fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap');
+
+/* ==========================================
+   TYPOGRAPHY SCALE
+   ========================================== */
+
+/* Responsive typography using clamp() for fluid scaling */
+:root {
+  --font-size-xs: clamp(0.7rem, 0.66rem + 0.2vw, 0.75rem);
+  --font-size-sm: clamp(0.8rem, 0.75rem + 0.25vw, 0.875rem);
+  --font-size-base: clamp(0.9rem, 0.85rem + 0.25vw, 1rem);
+  --font-size-lg: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  --font-size-xl: clamp(1.125rem, 1.05rem + 0.375vw, 1.25rem);
+  --font-size-2xl: clamp(1.25rem, 1.15rem + 0.5vw, 1.5rem);
+  --font-size-3xl: clamp(1.5rem, 1.35rem + 0.75vw, 1.875rem);
+  --font-size-4xl: clamp(1.875rem, 1.65rem + 1.125vw, 2.25rem);
+  --font-size-5xl: clamp(2.25rem, 1.95rem + 1.5vw, 3rem);
+}
+
+/* ==========================================
+   TEXT UTILITIES
+   ========================================== */
+
+/* Font Sizes */
+.text-xs { font-size: var(--font-size-xs); }
+.text-sm { font-size: var(--font-size-sm); }
+.text-base { font-size: var(--font-size-base); }
+.text-lg { font-size: var(--font-size-lg); }
+.text-xl { font-size: var(--font-size-xl); }
+.text-2xl { font-size: var(--font-size-2xl); }
+.text-3xl { font-size: var(--font-size-3xl); }
+.text-4xl { font-size: var(--font-size-4xl); }
+.text-5xl { font-size: var(--font-size-5xl); }
+
+/* Font Weights */
+.font-light { font-weight: var(--font-weight-light); }
+.font-normal { font-weight: var(--font-weight-normal); }
+.font-medium { font-weight: var(--font-weight-medium); }
+.font-semibold { font-weight: var(--font-weight-semibold); }
+.font-bold { font-weight: var(--font-weight-bold); }
+.font-extrabold { font-weight: var(--font-weight-extrabold); }
+
+/* Font Families */
+.font-sans { font-family: var(--font-family-base); }
+.font-heading { font-family: var(--font-family-heading); }
+.font-mono { font-family: var(--font-family-mono); }
+
+/* Line Heights */
+.leading-none { line-height: 1; }
+.leading-tight { line-height: var(--line-height-tight); }
+.leading-snug { line-height: var(--line-height-snug); }
+.leading-normal { line-height: var(--line-height-normal); }
+.leading-relaxed { line-height: var(--line-height-relaxed); }
+.leading-loose { line-height: var(--line-height-loose); }
+
+/* Text Alignment */
+.text-left { text-align: left; }
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.text-justify { text-align: justify; }
+
+/* Text Colors */
+.text-primary { color: var(--color-primary); }
+.text-secondary { color: var(--color-secondary); }
+.text-muted { color: var(--color-text-muted); }
+.text-success { color: var(--color-success); }
+.text-info { color: var(--color-info); }
+.text-warning { color: var(--color-warning); }
+.text-error { color: var(--color-error); }
+
+/* Text Decoration */
+.no-underline { text-decoration: none; }
+.underline { text-decoration: underline; }
+.line-through { text-decoration: line-through; }
+
+/* Text Transform */
+.uppercase { text-transform: uppercase; }
+.lowercase { text-transform: lowercase; }
+.capitalize { text-transform: capitalize; }
+.normal-case { text-transform: none; }
+
+/* Text Style */
+.italic { font-style: italic; }
+.not-italic { font-style: normal; }
+
+/* ==========================================
+   TEXT TRUNCATION & OVERFLOW
+   ========================================== */
+
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.line-clamp-1 {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ==========================================
+   SEMANTIC TEXT ELEMENTS
+   ========================================== */
+
+/* Quote styling */
+blockquote {
+  border-left: 4px solid var(--color-primary);
+  padding-left: var(--spacing-4);
+  margin: var(--spacing-6) 0;
+  font-style: italic;
+  color: var(--color-text-muted);
+}
+
+blockquote p {
+  margin-bottom: var(--spacing-2);
+}
+
+blockquote cite {
+  display: block;
+  margin-top: var(--spacing-2);
+  font-size: var(--font-size-sm);
+  font-style: normal;
+  color: var(--color-text-muted);
+}
+
+blockquote cite::before {
+  content: "— ";
+}
+
+/* Code styling */
+code {
+  font-family: var(--font-family-mono);
+  font-size: 0.875em;
+  background-color: var(--color-surface-alt);
+  padding: var(--spacing-1) var(--spacing-2);
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+}
+
+pre {
+  font-family: var(--font-family-mono);
+  background-color: var(--color-surface-alt);
+  padding: var(--spacing-4);
+  border-radius: var(--radius-base);
+  overflow-x: auto;
+  margin: var(--spacing-4) 0;
+}
+
+pre code {
+  background: none;
+  padding: 0;
+  font-size: inherit;
+}
+
+/* Mark/highlight styling */
+mark {
+  background-color: rgba(255, 235, 59, 0.3);
+  padding: var(--spacing-1);
+  border-radius: var(--radius-sm);
+}
+
+/* ==========================================
+   READING EXPERIENCE
+   ========================================== */
+
+/* Optimal reading width */
+.prose {
+  max-width: 65ch;
+  line-height: var(--line-height-relaxed);
+}
+
+.prose h1,
+.prose h2,
+.prose h3 {
+  margin-top: var(--spacing-8);
+  margin-bottom: var(--spacing-4);
+}
+
+.prose h1:first-child,
+.prose h2:first-child,
+.prose h3:first-child {
+  margin-top: 0;
+}
+
+.prose p {
+  margin-bottom: var(--spacing-4);
+}
+
+.prose ul,
+.prose ol {
+  margin: var(--spacing-4) 0;
+  padding-left: var(--spacing-6);
+}
+
+.prose li {
+  margin-bottom: var(--spacing-2);
+}
+
+.prose ul {
+  list-style-type: disc;
+}
+
+.prose ol {
+  list-style-type: decimal;
+}
+
+/* ==========================================
+   RESPONSIVE TYPOGRAPHY
+   ========================================== */
+
+/* Tablet and up */
+@media (min-width: 768px) {
+  .md-text-xs { font-size: var(--font-size-xs); }
+  .md-text-sm { font-size: var(--font-size-sm); }
+  .md-text-base { font-size: var(--font-size-base); }
+  .md-text-lg { font-size: var(--font-size-lg); }
+  .md-text-xl { font-size: var(--font-size-xl); }
+  .md-text-2xl { font-size: var(--font-size-2xl); }
+  .md-text-3xl { font-size: var(--font-size-3xl); }
+  .md-text-4xl { font-size: var(--font-size-4xl); }
+  .md-text-5xl { font-size: var(--font-size-5xl); }
+}
+
+/* Desktop and up */
+@media (min-width: 1024px) {
+  .lg-text-xs { font-size: var(--font-size-xs); }
+  .lg-text-sm { font-size: var(--font-size-sm); }
+  .lg-text-base { font-size: var(--font-size-base); }
+  .lg-text-lg { font-size: var(--font-size-lg); }
+  .lg-text-xl { font-size: var(--font-size-xl); }
+  .lg-text-2xl { font-size: var(--font-size-2xl); }
+  .lg-text-3xl { font-size: var(--font-size-3xl); }
+  .lg-text-4xl { font-size: var(--font-size-4xl); }
+  .lg-text-5xl { font-size: var(--font-size-5xl); }
+}
+
+/* ==========================================
+   PRINT STYLES
+   ========================================== */
+
+@media print {
+  * {
+    color: #000 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+  }
+  
+  p, blockquote {
+    orphans: 3;
+    widows: 3;
+  }
+  
+  blockquote {
+    page-break-inside: avoid;
+  }
+}

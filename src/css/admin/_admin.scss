@@ -1,0 +1,361 @@
+/**
+ * Admin UI Styles
+ * CustomTube Theme - Admin Layer
+ * 
+ * Styles for custom admin interfaces and overrides
+ */
+
+/* ==========================================
+   AUTO-DETECT URL UI (Classic Editor)
+   ========================================== */
+
+.auto-detect-url-container {
+    margin-bottom: 20px;
+    background: #f0f6fc;
+    padding: 20px;
+    border: 1px solid #2271b1;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.auto-detect-url-container h3 {
+    margin-top: 0;
+    color: #2271b1;
+    margin-bottom: 10px;
+}
+
+.auto-detect-url-input-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+#auto_detect_url {
+    flex: 1;
+    padding: 12px;
+    font-size: 14px;
+    border: 1px solid #8c8f94;
+    border-radius: 4px;
+    height: auto;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.07);
+    transition: border-color 0.2s;
+}
+
+#auto_detect_url:focus {
+    border-color: #2271b1;
+    box-shadow: 0 0 0 1px #2271b1;
+    outline: 2px solid transparent;
+}
+
+#auto-detect-spinner {
+    float: none;
+    margin: 0;
+}
+
+.auto-detect-notice {
+    padding: 8px !important;
+    margin: 10px 0 !important;
+}
+
+#auto-detect-result {
+    margin-top: 10px;
+    min-height: 24px;
+}
+
+#auto-detect-result p {
+    margin: 0.5em 0;
+}
+
+/* Animation for the spinner */
+@keyframes auto-detect-pulse {
+    0% { box-shadow: 0 0 8px rgba(30,140,190,0.8); }
+    50% { box-shadow: 0 0 16px rgba(30,140,190,1); }
+    100% { box-shadow: 0 0 8px rgba(30,140,190,0.8); }
+}
+
+/* Hide the Classic Editor UI if Block Editor is active */
+body.block-editor-page .classic-editor-only {
+    display: none;
+}
+
+/* ==========================================
+   GUTENBERG BLOCK EDITOR UI
+   ========================================== */
+
+.gutenberg-in-metabox {
+    background: #f0f6fc;
+    padding: 15px;
+    margin: -16px -16px 20px -16px;
+    border-bottom: 2px solid #2271b1;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+.gutenberg-in-metabox h3 {
+    margin-top: 0 !important;
+}
+#auto-detect-result {
+    margin-top: 10px;
+}
+
+/* ==========================================
+   FFMPEG SETTINGS PAGE
+   ========================================== */
+
+.progress-bar-container {
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+#bulk-clips-progress {
+    background-color: #0073aa;
+    height: 20px;
+    width: 0%;
+    transition: width 0.3s ease;
+}
+
+/* ==========================================
+   DASHBOARD WIDGETS
+   ========================================== */
+
+.customtube-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 15px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.customtube-stat-box {
+    background: #f9f9f9;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    padding: 15px;
+    text-align: center;
+}
+
+.customtube-stat-box h3 {
+    font-size: 14px;
+    margin: 0 0 10px 0;
+    color: #555;
+}
+
+.customtube-stat-count {
+    font-size: 24px;
+    font-weight: bold;
+    color: #0073aa;
+}
+
+.customtube-videos-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+.customtube-videos-table th,
+.customtube-videos-table td {
+    padding: 8px;
+    border: 1px solid #eee;
+    text-align: left;
+}
+
+.customtube-videos-table .video-thumbnail {
+    width: 80px;
+    height: 45px;
+    overflow: hidden;
+    background: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.customtube-videos-table .video-thumbnail img {
+    max-width: 100%;
+    height: auto;
+}
+
+.customtube-videos-table .no-thumbnail {
+    width: 80px;
+    height: 45px;
+    background: #e0e0e0;
+}
+
+.customtube-view-all {
+    text-align: right;
+    margin-top: 10px;
+}
+
+.customtube-system-issues ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.customtube-system-issues li {
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.customtube-system-issues .dashicons {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+}
+
+.customtube-system-issue-warning { color: #ffb900; }
+.customtube-system-issue-error { color: #dc3232; }
+.customtube-system-issue-info { color: #00a0d2; }
+
+.customtube-system-ok {
+    color: #46b450;
+    font-weight: bold;
+}
+
+.customtube-system-info table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.customtube-system-info td {
+    padding: 8px;
+    border: 1px solid #eee;
+}
+
+/* ==========================================
+   TOOLS PAGE
+   ========================================== */
+
+.customtube-tool-section {
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    border-radius: 4px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.customtube-tool-description ul {
+    list-style: disc;
+    margin-left: 20px;
+    margin-bottom: 15px;
+}
+
+.customtube-warning {
+    background: #fff8e1;
+    border-left: 4px solid #ffc107;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.customtube-warning p {
+    margin: 0;
+}
+
+#system-info-textarea {
+    width: 100%;
+    min-height: 300px;
+    font-family: monospace;
+    font-size: 13px;
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 10px;
+    resize: vertical;
+}
+
+/* ==========================================
+   PERFORMER METABOX
+   ========================================== */
+
+.performer-metabox {
+    max-height: 300px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+.performer-az-navigation {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 10px;
+    padding: 10px;
+    background: #f0f0f0;
+    border-radius: 3px;
+}
+.performer-az-navigation a {
+    display: inline-block;
+    width: 26px;
+    height: 26px;
+    line-height: 26px;
+    text-align: center;
+    text-decoration: none;
+    background: #fff;
+    border-radius: 3px;
+}
+.performer-az-navigation a.has-performers {
+    font-weight: bold;
+    background: #2271b1;
+    color: #fff;
+}
+.performer-az-navigation a.no-performers {
+    color: #999;
+    cursor: default;
+}
+.performers-tabs-panel {
+    overflow-y: auto;
+    max-height: 200px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    background: #fff;
+}
+.performer-letter-heading {
+    position: sticky;
+    top: 0;
+    background: #f0f0f0;
+    margin: 0 -10px 10px;
+    padding: 5px 10px;
+    border-bottom: 1px solid #ddd;
+}
+.performer-letter-heading.highlighted {
+    background: #ffff9c;
+}
+.performer-search {
+    margin-bottom: 10px;
+    position: relative;
+}
+.performer-search-results {
+    position: absolute;
+    z-index: 100;
+    background: #fff;
+    border: 1px solid #ddd;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.performer-search-results ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.performer-search-results li {
+    padding: 5px 10px;
+    cursor: pointer;
+}
+.performer-search-results li:hover {
+    background: #f0f0f0;
+}
+.performer-add-new {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.performer-add-new input {
+    flex: 1;
+}
+.performer-add-new .spinner {
+    float: none;
+    margin: 0;
+}

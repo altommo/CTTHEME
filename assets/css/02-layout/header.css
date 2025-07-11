@@ -1,0 +1,749 @@
+/**
+ * Site Header Layout
+ * CustomTube Theme - Layout Layer
+ * 
+ * Clean header structure with branding, search, and user actions
+ */
+
+/* ==========================================
+   SITE HEADER STRUCTURE
+   ========================================== */
+
+.ph-nav { /* Renamed from .site-header */
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: var(--header-height, 70px); /* Fallback height */
+  /* Background will be set by theme system */
+  border-bottom: 1px solid var(--lc-border);
+  z-index: 1000; /* HIGHER than mobile menu (999) to stay on top */
+  box-shadow: var(--lc-shadow-md);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  /* Ensure theme colors apply properly */
+}
+
+.ph-nav__inner { /* Renamed from .site-header-container */
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Distribute items with space between */
+  height: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--spacing-4);
+  gap: var(--spacing-4);
+}
+
+/* ==========================================
+   SITE BRANDING
+   ========================================== */
+
+.ph-nav__left { /* Container for hamburger, logo, and theme toggle */
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3); /* Consistent spacing between all elements */
+    flex-shrink: 0;
+    flex-grow: 1; /* Allow it to grow to center the logo */
+    justify-content: flex-start; /* Align items to the start */
+    /* iOS Safari fixes */
+    flex-direction: row !important; /* Force row direction for iOS Safari */
+    width: auto; /* Ensure proper width calculation */
+    min-height: 0; /* Prevent height issues */
+}
+
+.ph-nav__logo { /* Renamed from .site-branding */
+  display: flex;
+  align-items: center;
+  text-decoration: none; /* Ensure no underline on logo link */
+  font-size: var(--font-size-3xl); /* Increased logo size */
+  font-weight: var(--font-weight-bold);
+  font-family: var(--font-family-heading);
+  transition: var(--transition-transform);
+  flex-shrink: 0; /* Prevent logo from shrinking */
+  /* Remove auto margin - logo should be to the right of burger */
+  margin: 0;
+  /* iOS Safari fixes */
+  flex-grow: 0 !important;
+  -webkit-flex-shrink: 0; /* Webkit prefix for older Safari */
+  -webkit-flex-grow: 0;
+  width: auto;
+  min-width: 0;
+}
+
+.ph-nav__logo:hover {
+  transform: scale(1.02);
+}
+
+/* Custom logo image support */
+.ph-nav__logo .custom-logo {
+  max-height: 48px; /* Increased image logo size */
+  width: auto;
+}
+
+/* ==========================================
+   SITE ACTIONS (RIGHT SECTION)
+   ========================================== */
+
+.ph-nav__right { /* Container for theme toggle and other actions */
+  display: flex !important;
+  align-items: center;
+  gap: var(--spacing-3);
+  flex-shrink: 0 !important;
+  flex-grow: 0 !important; /* Don't allow to grow */
+  justify-content: flex-end !important; /* Align items to the end */
+  min-width: 50px !important; /* Ensure minimum width for theme toggle */
+  position: relative;
+  z-index: 1001;
+}
+
+/* Two-tone logo effect (from inc/inline-styles.php) */
+.site-logo-link {
+    position: relative;
+    text-decoration: none;
+    /* Removed font-size: 0; to allow text display */
+    display: flex;
+    align-items: center;
+}
+
+.site-title-main {
+    color: var(--color-text);
+    font-weight: var(--font-weight-bold);
+    font-size: 1em; /* Relative to parent .ph-nav__logo */
+}
+
+.site-title-accent {
+    background-color: var(--color-primary);
+    color: #ffffff;
+    padding: var(--spacing-1) var(--spacing-3);
+    border-radius: var(--radius-full);
+    margin-left: var(--spacing-1);
+    font-size: 0.6em; /* Relative to parent .ph-nav__logo */
+    font-weight: var(--font-weight-bold);
+}
+
+/* Dark mode adjustments for text logo */
+.dark-mode .site-title-main {
+    color: var(--color-dark-text);
+}
+
+/* ==========================================
+   SEARCH FORM
+   ========================================== */
+
+.ph-nav__search { /* Renamed from .site-search */
+  flex: 1;
+  max-width: 280px; /* Visual detail from spec */
+  position: relative;
+}
+
+.ph-nav__search .search-field { /* Renamed from .search-field */
+  width: 100%;
+  height: 36px; /* Visual detail from spec */
+  padding: 0 var(--spacing-10) 0 var(--spacing-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+  transition: var(--transition-colors);
+}
+
+.ph-nav__search .search-field:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(255, 64, 87, 0.2);
+}
+
+.ph-nav__search .search-field::placeholder {
+  color: var(--color-text-muted);
+}
+
+.ph-nav__search .search-submit { /* Renamed from .search-submit */
+  position: absolute;
+  right: var(--spacing-2);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: transparent;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  border-radius: var(--radius-base);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-colors);
+}
+
+.ph-nav__search .search-submit:hover {
+  color: var(--color-primary);
+  background-color: var(--color-surface-alt);
+}
+
+.ph-nav__search .search-submit svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ==========================================
+   SITE ACTIONS
+   ========================================== */
+
+.ph-nav__right { /* Container for search, theme toggle, and auth */
+  display: flex !important;
+  align-items: center;
+  gap: var(--spacing-3);
+  flex-shrink: 0 !important;
+  flex-grow: 0 !important; /* Don't allow to grow */
+  justify-content: flex-end !important; /* Align items to the end */
+  min-width: 50px !important; /* Ensure minimum width for theme toggle */
+  position: relative;
+  z-index: 1001;
+}
+
+/* Theme switcher - Always show by default */
+.ph-nav__theme-toggle {
+  display: inline-flex;
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--lc-border);
+  border-radius: var(--lc-radius-full);
+  background-color: var(--lc-surface-alt);
+  color: var(--lc-text-primary);
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 1001;
+  /* Make it a proper button */
+  font: inherit;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.ph-nav__theme-toggle:hover {
+  background-color: var(--lc-accent);
+  color: white;
+  border-color: var(--lc-accent);
+  transform: scale(1.05);
+}
+
+.ph-nav__theme-toggle svg {
+  width: 20px;
+  height: 20px;
+  transition: var(--transition-opacity);
+}
+
+/* Icon state management */
+.theme-icon--sun {
+    display: block;
+}
+
+.theme-icon--moon {
+    display: none;
+}
+
+[data-theme="dark"],
+.dark-mode {
+    .theme-icon--sun {
+        display: none;
+    }
+    .theme-icon--moon {
+        display: block;
+    }
+}
+
+/* User menu */
+.ph-nav__user-menu { /* New class for user menu container */
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+}
+
+.ph-nav__notifications { /* New class for notifications button */
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-colors);
+    position: relative;
+}
+
+.ph-nav__notifications:hover {
+    background-color: var(--color-surface-alt);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+.ph-nav__user-avatar { /* Renamed from .user-menu-toggle */
+  position: relative;
+  cursor: pointer;
+}
+
+.ph-nav__user-avatar img { /* Renamed from .user-menu-toggle img */
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  border: 2px solid transparent;
+  transition: var(--transition-colors);
+}
+
+.ph-nav__user-avatar:hover img {
+  border-color: var(--color-primary);
+}
+
+.ph-nav__user-dropdown { /* Renamed from .user-menu-dropdown */
+  position: absolute;
+  top: calc(100% + var(--spacing-2));
+  right: 0;
+  min-width: 200px;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: var(--spacing-2);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: opacity var(--duration-200) var(--ease-out),
+              visibility var(--duration-200) var(--ease-out),
+              transform var(--duration-200) var(--ease-out);
+  z-index: var(--z-dropdown); /* Ensure dropdown is above content but below header */
+}
+
+.ph-nav__user-avatar.is-active .ph-nav__user-dropdown, /* New active state class */
+.ph-nav__user-dropdown.is-active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.ph-nav__user-dropdown ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ph-nav__user-dropdown li {
+  margin: 0;
+}
+
+.ph-nav__user-dropdown a {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2); /* Added gap for icon */
+  padding: var(--spacing-3);
+  color: var(--color-text);
+  text-decoration: none;
+  border-radius: var(--radius-base);
+  transition: var(--transition-colors);
+  font-size: var(--font-size-sm);
+  text-transform: none; /* Override uppercase from main nav */
+  letter-spacing: normal; /* Override letter spacing from main nav */
+}
+
+.ph-nav__user-dropdown a:hover {
+  background-color: var(--color-surface-alt);
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.ph-nav__user-dropdown svg { /* Added styling for icons */
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+/* Login/Register buttons */
+.ph-btn { /* Base button style for PH nav */
+    padding: var(--spacing-2) var(--spacing-4);
+    border-radius: var(--radius-full);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-sm);
+    text-decoration: none;
+    transition: var(--transition-colors);
+    cursor: pointer;
+    border: 1px solid transparent;
+    display: inline-flex; /* Ensure flex for icon + text */
+    align-items: center;
+    justify-content: center;
+    min-width: 80px; /* Ensure consistent button width */
+}
+
+.ph-btn--outline { /* Outline variant */
+    color: var(--color-text);
+    background-color: transparent;
+    border-color: var(--color-border);
+}
+
+.ph-btn--outline:hover {
+    background-color: var(--color-surface-alt);
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+    text-decoration: none;
+}
+
+.ph-btn--solid { /* Solid variant */
+    color: #ffffff;
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+.ph-btn--solid:hover {
+    background-color: var(--color-primary-dark);
+    border-color: var(--color-primary-dark);
+    text-decoration: none;
+}
+
+/* ==========================================
+   HAMBURGER MENU
+   ========================================== */
+
+.ph-nav__burger {
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-base);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  cursor: pointer;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  transition: var(--transition-colors);
+  /* iOS Safari fixes */
+  display: flex !important;
+  flex-shrink: 0 !important;
+  flex-grow: 0 !important;
+  min-width: 40px;
+  min-height: 40px;
+  -webkit-flex-shrink: 0; /* Webkit prefix for older Safari */
+  -webkit-flex-grow: 0;
+}
+
+.ph-nav__burger:hover {
+  background-color: var(--color-surface-alt);
+  border-color: var(--color-primary);
+}
+
+.ph-nav__burger svg { /* Style the SVG icon */
+    width: 24px;
+    height: 24px;
+}
+
+/* ==========================================
+   IOS SAFARI SPECIFIC FIXES
+   ========================================== */
+
+/* Target iOS Safari specifically */
+@supports (-webkit-touch-callout: none) {
+  .ph-nav__left {
+    display: -webkit-flex !important;
+    display: flex !important;
+    -webkit-flex-direction: row !important;
+    flex-direction: row !important;
+    -webkit-align-items: center !important;
+    align-items: center !important;
+    -webkit-justify-content: flex-start !important;
+    justify-content: flex-start !important;
+    width: auto !important;
+    min-height: var(--header-height) !important;
+  }
+  
+  .ph-nav__burger {
+    -webkit-order: 1 !important;
+    order: 1 !important;
+    -webkit-flex: none !important;
+    flex: none !important;
+    margin-right: 12px !important; /* Fallback spacing */
+  }
+  
+  .ph-nav__logo {
+    -webkit-order: 2 !important;
+    order: 2 !important;
+    -webkit-flex: none !important;
+    flex: none !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+}
+
+/* iOS specific media query */
+@media only screen 
+  and (device-width: 390px) 
+  and (device-height: 844px) 
+  and (-webkit-device-pixel-ratio: 3), 
+  only screen 
+  and (device-width: 375px) 
+  and (device-height: 812px) 
+  and (-webkit-device-pixel-ratio: 3),
+  only screen 
+  and (device-width: 414px) 
+  and (device-height: 896px) 
+  and (-webkit-device-pixel-ratio: 2),
+  only screen 
+  and (device-width: 375px) 
+  and (device-height: 667px) 
+  and (-webkit-device-pixel-ratio: 2) {
+  
+  .ph-nav__left {
+    display: -webkit-flex !important;
+    -webkit-flex-direction: row !important;
+    -webkit-align-items: center !important;
+  }
+  
+  .ph-nav__burger {
+    -webkit-order: 1 !important;
+    margin-right: 12px !important;
+    -webkit-flex-shrink: 0 !important;
+  }
+  
+  .ph-nav__logo {
+    -webkit-order: 2 !important;
+    margin-left: 0 !important;
+    -webkit-flex-shrink: 0 !important;
+  }
+}
+
+/* Additional iOS Safari fallback using user agent */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  _::-webkit-full-page-media, _:future, :root .ph-nav__left {
+    gap: 12px !important; /* Fallback gap for older Safari */
+  }
+  
+  _::-webkit-full-page-media, _:future, :root .ph-nav__burger {
+    margin-right: 12px !important;
+  }
+}
+
+/* ==========================================
+   RESPONSIVE BEHAVIOR
+   ========================================== */
+
+/* always hide both by default, we’ll show exactly one via media queries */
+.ph-nav__right .ph-nav__theme-toggle,
+.ph-nav__left  .ph-nav__theme-toggle {
+  display: none !important;
+}
+
+/* Desktop - Full Navigation (1025px and up) */
+@media (min-width: 1025px) {
+    .ph-nav__left { /* Left group contains logo */
+        flex-grow: 0;
+        justify-content: flex-start;
+    }
+    
+    .ph-nav__logo {
+        order: 0;
+        margin: 0;
+    }
+    
+    .ph-nav__links { /* Desktop primary menu */
+        display: flex;
+        order: 1;
+        flex-grow: 1;
+        justify-content: center; /* Center the navigation */
+    }
+    
+    .ph-nav__right { /* Right group shows on desktop */
+        display: flex !important;
+        order: 2;
+    }
+    
+    /* Hide hamburger on desktop */
+    .ph-nav__burger {
+        display: none;
+    }
+    
+    /* on desktop, show the one in .ph-nav__right */
+    .ph-nav__right .ph-nav__theme-toggle {
+        display: inline-flex !important;
+    }
+    /* Hide the mobile theme toggle (the one in left group) on desktop */
+    .ph-nav__left .ph-nav__theme-toggle {
+        display: none !important;
+    }
+}
+
+/* Tablet and Mobile - Condensed Navigation (1024px and below) */
+@media (max-width: 1024px) {
+    /* Arrange burger → logo → toggle */
+    .ph-nav__left {
+        display: flex;
+        align-items: center;
+        flex-grow: 1;
+        justify-content: flex-start;
+        /* iOS Safari fallbacks */
+        display: -webkit-flex;
+        -webkit-flex-direction: row;
+        -webkit-align-items: center;
+        -webkit-justify-content: flex-start;
+    }
+    
+    .ph-nav__burger {
+        order: 1;
+        margin-right: var(--spacing-3);
+        flex-shrink: 0;
+        display: flex;
+        /* iOS Safari fallbacks */
+        -webkit-order: 1;
+        -webkit-flex-shrink: 0;
+        display: -webkit-flex;
+    }
+    
+    .ph-nav__logo {
+        order: 2;
+        margin: 0 var(--spacing-3);
+        flex-shrink: 0;
+        /* iOS Safari fallbacks */
+        -webkit-order: 2;
+        -webkit-flex-shrink: 0;
+    }
+    
+    /* on mobile, show the one in .ph-nav__left */
+    .ph-nav__left .ph-nav__theme-toggle {
+        display: inline-flex !important;
+        order: 3;
+        margin-left: auto;
+        flex-shrink: 0;
+        /* iOS Safari fallbacks */
+        -webkit-order: 3;
+        -webkit-flex-shrink: 0;
+    }
+    
+    /* Hide the desktop theme toggle (in right group) on mobile */
+    .ph-nav__right {
+        display: none !important;
+    }
+
+    .ph-nav__inner {
+        gap: var(--spacing-3);
+        /* iOS Safari fallback */
+        -webkit-justify-content: space-between;
+        justify-content: space-between;
+    }
+}
+
+/* Mobile - Minimal Navigation (767px and below) */
+@media (max-width: 767px) {
+    .ph-nav {
+        height: 50px; /* Smaller header on mobile */
+    }
+    
+    .ph-nav__search {
+        max-width: 160px; /* Even smaller search bar on mobile */
+    }
+    
+    .ph-nav__search .search-field {
+        height: 32px;
+        font-size: var(--font-size-xs);
+    }
+    
+    .ph-nav__right { /* Renamed from ph-nav__right-section */
+        gap: var(--spacing-2); /* Smaller gap on mobile */
+    }
+    
+    .ph-nav__theme-toggle,
+    .ph-nav__notifications {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .ph-nav__user-avatar img {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .ph-btn {
+        padding: var(--spacing-1) var(--spacing-3);
+        font-size: var(--font-size-xs);
+        min-width: 60px;
+    }
+    
+    .ph-nav__inner {
+        padding: 0 var(--spacing-3);
+        gap: var(--spacing-2);
+    }
+}
+
+/* Very Small Screens (480px and below) */
+@media (max-width: 480px) {
+    .ph-nav__search {
+        max-width: 120px;
+    }
+    
+    .ph-nav__right {
+        gap: var(--spacing-1);
+    }
+}
+
+/* ==========================================
+   THEME SYSTEM - LIGHT/DARK MODE
+   ========================================== */
+
+/* Toggle icon colors */
+html[data-current-mode="light"] .ph-nav__theme-toggle,
+html[data-current-mode="light"] .ph-nav__burger {
+  color: #000 !important;
+}
+html[data-current-mode="dark"]  .ph-nav__theme-toggle,
+html[data-current-mode="dark"]  .ph-nav__burger {
+  color: #fff !important;
+}
+
+/* ==========================================
+   HEADER STATES
+   ========================================== */
+
+.ph-nav.is-scrolled {
+  box-shadow: var(--shadow-base);
+  backdrop-filter: blur(8px);
+  background-color: rgba(248, 249, 250, 0.95); /* Semi-transparent background */
+}
+
+.dark-mode .ph-nav.is-scrolled {
+  background-color: rgba(22, 27, 34, 0.95);
+}
+
+.ph-nav.is-hidden {
+  transform: translateY(-100%);
+}
+
+/* ==========================================
+   ACCESSIBILITY ENHANCEMENTS
+   ========================================== */
+
+/* Focus states */
+.ph-nav button:focus,
+.ph-nav a:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* High contrast support */
+@media (prefers-contrast: high) {
+  .ph-nav {
+    border-bottom-width: 2px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .ph-nav,
+  .ph-nav__theme-toggle,
+  .ph-nav__user-avatar,
+  .ph-nav__user-dropdown {
+    transition: none;
+  }
+}

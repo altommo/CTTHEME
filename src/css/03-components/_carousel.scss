@@ -1,0 +1,347 @@
+/**
+ * Carousel Component Styles
+ * CustomTube Theme - Components Layer
+ *
+ * Styles for the flexible Carousel component.
+ */
+
+/* ==========================================
+   BASE CAROUSEL STYLES
+   ========================================== */
+
+.carousel-component {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    margin: var(--spacing-6) 0;
+    background-color: var(--color-surface);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+}
+
+.carousel-track-container {
+    overflow: hidden; /* Hide scrollbar but allow scrolling */
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out; /* Smooth slide transition */
+    scroll-behavior: smooth;
+}
+
+.carousel-slide {
+    flex-shrink: 0;
+    width: calc(100% / var(--carousel-slides-to-show, 1)); /* Default to 1 slide per view */
+    scroll-snap-align: start;
+    position: relative;
+    overflow: hidden;
+    background-color: var(--color-surface-alt);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white; /* Default text color for slide content */
+}
+
+.carousel-slide-media {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.carousel-slide-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: var(--spacing-6);
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+    text-align: center;
+    color: white;
+}
+
+.carousel-slide-title {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--spacing-2);
+}
+
+.carousel-slide-description {
+    font-size: var(--font-size-base);
+    margin-bottom: var(--spacing-4);
+    opacity: 0.9;
+}
+
+.carousel-slide-button {
+    display: inline-block;
+    padding: var(--spacing-3) var(--spacing-5);
+    background-color: var(--color-primary);
+    color: white;
+    border-radius: var(--radius-full);
+    text-decoration: none;
+    font-weight: var(--font-weight-medium);
+    transition: background-color 0.3s ease;
+}
+
+.carousel-slide-button:hover {
+    background-color: var(--color-primary-dark);
+}
+
+/* ==========================================
+   CAROUSEL NAVIGATION BUTTONS
+   ========================================== */
+
+.carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    border-radius: var(--radius-full);
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: var(--z-popover);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.carousel-button:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+    transform: translateY(-50%) scale(1.05);
+}
+
+.carousel-button-prev {
+    left: var(--spacing-4);
+}
+
+.carousel-button-next {
+    right: var(--spacing-4);
+}
+
+.carousel-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: translateY(-50%) scale(1); /* No scale on disabled */
+}
+
+/* ==========================================
+   CAROUSEL PAGINATION DOTS
+   ========================================== */
+
+.carousel-pagination {
+    position: absolute;
+    bottom: var(--spacing-4);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: var(--spacing-2);
+    z-index: var(--z-popover);
+}
+
+.carousel-pagination-dot {
+    width: 12px;
+    height: 12px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border: none;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.carousel-pagination-dot.is-active {
+    background-color: var(--color-primary);
+    transform: scale(1.2);
+}
+
+.carousel-pagination-dot:hover {
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+/* ==========================================
+   DISPLAY MODES
+   ========================================== */
+
+/* 1. Full-Width Hero Mode */
+.carousel-mode-full-width-hero {
+    height: 500px; /* Fixed height for hero section */
+    .carousel-track-container, .carousel-track, .carousel-slide {
+        height: 100%;
+    }
+    .carousel-slide-content {
+        background: linear-gradient(transparent 30%, rgba(0, 0, 0, 0.8) 100%);
+        padding: var(--spacing-8) var(--spacing-6);
+    }
+    .carousel-slide-title {
+        font-size: var(--font-size-4xl);
+    }
+    .carousel-slide-description {
+        font-size: var(--font-size-lg);
+    }
+    .carousel-button {
+        width: 60px;
+        height: 60px;
+    }
+    .carousel-pagination {
+        bottom: var(--spacing-6);
+    }
+}
+
+/* 2. Multi-Row Strip Mode */
+.carousel-mode-multi-row-strip {
+    .carousel-track-container {
+        overflow-x: scroll; /* Allow manual scrolling */
+        scroll-snap-type: x mandatory;
+    }
+    .carousel-track {
+        padding-bottom: var(--spacing-4); /* Space for scrollbar */
+    }
+    .carousel-slide {
+        width: auto; /* Let content define width */
+        margin-right: var(--spacing-4); /* Gap between slides */
+        flex-basis: calc(100% / var(--carousel-slides-to-show, 3) - var(--spacing-4)); /* Adjust width based on slidesToShow */
+        aspect-ratio: 16/9; /* Example aspect ratio for video thumbnails */
+    }
+    .carousel-slide:last-child {
+        margin-right: 0;
+    }
+    .carousel-slide-content {
+        position: static; /* Content flows with layout */
+        background: none;
+        color: var(--color-text);
+        padding: var(--spacing-3);
+        text-align: left;
+    }
+    .carousel-slide-title {
+        font-size: var(--font-size-base);
+        color: var(--color-text);
+    }
+    .carousel-slide-description {
+        display: none; /* Hide description in this mode */
+    }
+    .carousel-slide-button {
+        display: none; /* Hide button in this mode */
+    }
+    .carousel-button, .carousel-pagination {
+        display: none; /* Hide default navigation */
+    }
+}
+
+/* 3. Micro-Carousel Mode */
+.carousel-mode-micro-carousel {
+    height: 150px; /* Small fixed height */
+    .carousel-track-container, .carousel-track, .carousel-slide {
+        height: 100%;
+    }
+    .carousel-slide-content {
+        padding: var(--spacing-2);
+        background: rgba(0, 0, 0, 0.5);
+    }
+    .carousel-slide-title {
+        font-size: var(--font-size-base);
+    }
+    .carousel-slide-description, .carousel-slide-button {
+        display: none; /* Hide extra content */
+    }
+    .carousel-button {
+        width: 32px;
+        height: 32px;
+    }
+    .carousel-pagination {
+        display: none; /* Hide pagination */
+    }
+}
+
+/* ==========================================
+   LAZY LOADING STATES
+   ========================================== */
+
+.carousel-slide-media:not(.is-loaded) {
+    background-color: var(--color-border);
+    min-height: 50px; /* Placeholder height */
+}
+
+.carousel-slide-media[data-src] {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.carousel-slide-media.is-loaded {
+    opacity: 1;
+}
+
+/* ==========================================
+   RESPONSIVE ADJUSTMENTS
+   ========================================== */
+
+@media (max-width: 768px) {
+    .carousel-mode-full-width-hero {
+        height: 300px;
+        .carousel-slide-content {
+            padding: var(--spacing-4);
+        }
+        .carousel-slide-title {
+            font-size: var(--font-size-xl);
+        }
+        .carousel-slide-description {
+            font-size: var(--font-size-sm);
+        }
+        .carousel-button {
+            width: 40px;
+            height: 40px;
+        }
+    }
+
+    .carousel-mode-multi-row-strip .carousel-slide {
+        flex-basis: calc(100% / var(--carousel-slides-to-show-md, 2) - var(--spacing-4));
+    }
+}
+
+@media (max-width: 480px) {
+    .carousel-mode-full-width-hero {
+        height: 200px;
+        .carousel-slide-title {
+            font-size: var(--font-size-lg);
+        }
+        .carousel-slide-description {
+            display: none;
+        }
+        .carousel-button {
+            display: none; /* Hide buttons on very small screens */
+        }
+    }
+
+    .carousel-mode-multi-row-strip .carousel-slide {
+        flex-basis: calc(100% / var(--carousel-slides-to-show-sm, 1) - var(--spacing-4));
+    }
+}
+
+/* ==========================================
+   ACCESSIBILITY & ANIMATION
+   ========================================== */
+
+.carousel-component:focus-within {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+.carousel-button:focus-visible,
+.carousel-pagination-dot:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .carousel-track {
+        transition: none !important;
+        scroll-behavior: auto !important;
+    }
+    .carousel-slide-media {
+        transition: none !important;
+    }
+}

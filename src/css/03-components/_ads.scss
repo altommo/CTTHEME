@@ -1,0 +1,360 @@
+/**
+ * Ad Zones Styling
+ * CustomTube Theme - Component Layer
+ * 
+ * Styles for all ad containers and zones
+ */
+
+/* ==========================================
+   GLOBAL AD CONTAINER STYLES
+   ========================================== */
+
+.tube-ads-container {
+  margin: var(--spacing-6) 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tube-ads-container.empty-zone {
+  display: none; /* Hide empty ad zones */
+}
+
+.tube-ad {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-base);
+  overflow: hidden;
+  transition: var(--transition-colors);
+}
+
+.tube-ad:hover {
+  border-color: var(--color-primary);
+}
+
+.tube-ad iframe {
+  display: block;
+  border: none;
+  /* Added to contain external ad iframes */
+  max-width: 100%;
+  height: auto;
+}
+
+/* ==========================================
+   AD Z-INDEX HIERARCHY
+   ========================================== */
+
+/* Content area z-index (baseline) */
+.main-content,
+.video-grid,
+.content-area,
+.site-content {
+    z-index: 1 !important;
+    position: relative !important;
+}
+
+/* All ads should be above content but below navigation */
+.tube-ads-sidebar,
+.tube-ads-video-top,
+.tube-ads-video-bottom,
+.tube-ads-footer,
+.tube-ads-floating,
+.tube-ads-banner,
+.tube-ads-popup,
+.ad-container,
+[class*="tube-ads"],
+[class*="ad-"] {
+    z-index: 1070 !important;
+    position: relative !important;
+}
+
+/* Header ad specifically (positioning handled in navigation.css) */
+.tube-ads-header {
+    z-index: 1070 !important;
+}
+
+/* Floating/sticky ads */
+.tube-ads-floating,
+.tube-ads-sticky {
+    z-index: 1075 !important;
+    position: fixed !important;
+}
+
+/* Popup ads (highest ad priority but below navigation) */
+.tube-ads-popup,
+.tube-ads-modal {
+    z-index: 1079 !important;
+    position: fixed !important;
+}
+
+/* ==========================================
+   HEADER AD ZONE
+   ========================================== */
+
+.tube-ads-header {
+  /* Basic styling - positioning handled in navigation.css */
+  /* All positioning properties removed to avoid conflicts */
+}
+
+.tube-ads-header .tube-ad {
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  min-height: 90px;
+}
+
+/* Header Ad Theme Integration */
+/* Light theme header ad background */
+html[data-current-mode="light"] .tube-ads-header {
+    background-color: transparent !important;
+    color: var(--lc-text-primary, #222222) !important;
+    border: none !important;
+}
+
+/* Dark theme header ad background */
+html[data-current-mode="dark"] .tube-ads-header {
+    background-color: transparent !important;
+    color: var(--lc-text-primary, #e8e0d8) !important;
+    border: none !important;
+}
+
+/* Fallback when no theme attribute is set (default to dark) */
+html:not([data-current-mode]) .tube-ads-header {
+    background-color: transparent !important;
+    color: var(--lc-text-primary, #e8e0d8) !important;
+    border: none !important;
+}
+
+/* Additional styling for seamless integration */
+.tube-ads-header {
+    /* Match navigation backdrop blur if present */
+    backdrop-filter: var(--nav-backdrop-filter, none) !important;
+    -webkit-backdrop-filter: var(--nav-backdrop-filter, none) !important;
+    
+    /* Smooth background transitions */
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease-in-out !important;
+}
+
+/* Add top padding to body when header ads are present */
+body.has-header-ads {
+  padding-top: calc(var(--header-nav-height) + 90px);
+}
+
+body.has-header-ads .site-content {
+  padding-top: 0;
+}
+
+/* ==========================================
+   BELOW-HEADER AD ZONE
+   ========================================== */
+
+.tube-ads-below-header {
+  margin: 0 0 var(--spacing-6) 0;
+  padding: var(--spacing-4) 0;
+  background-color: var(--color-surface-alt);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.tube-ads-below-header .tube-ad {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  min-height: 100px;
+  background-color: var(--color-surface);
+}
+
+/* ==========================================
+   IN-CONTENT AD ZONE
+   ========================================== */
+
+.tube-ads-in-content {
+  margin: var(--spacing-8) 0;
+  padding: var(--spacing-4);
+  background-color: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.tube-ads-in-content .tube-ad {
+  min-height: 300px;
+  background-color: var(--color-surface);
+}
+
+/* Add subtle "Advertisement" label */
+.tube-ads-in-content::before {
+  content: "Advertisement";
+  display: block;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  text-align: center;
+  margin-bottom: var(--spacing-2);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ==========================================
+   FOOTER AD ZONE
+   ========================================== */
+
+.footer-ad-container {
+  margin: var(--spacing-8) 0 0 0;
+  padding: var(--spacing-6) 0;
+  background-color: var(--color-surface-alt);
+  border-top: 1px solid var(--color-border);
+}
+
+.tube-ads-footer {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: 0 var(--spacing-4);
+}
+
+.tube-ads-footer .tube-ad {
+  min-height: 200px;
+  background-color: var(--color-surface);
+}
+
+/* ==========================================
+   RESPONSIVE AD BEHAVIOR
+   ========================================== */
+
+/* Large screens - full width ads */
+@media (min-width: 1200px) {
+  .tube-ads-header .tube-ad,
+  .tube-ads-below-header .tube-ad {
+    padding: 0 var(--spacing-4);
+  }
+  
+  .tube-ads-in-content .tube-ad {
+    min-height: 350px;
+  }
+}
+
+/* Medium screens - slightly smaller ads */
+@media (max-width: 1199px) and (min-width: 768px) {
+  .tube-ads-in-content .tube-ad {
+    min-height: 280px;
+  }
+  
+  .tube-ads-footer .tube-ad {
+    min-height: 180px;
+  }
+}
+
+/* Mobile screens - stack and resize ads */
+@media (max-width: 767px) {
+  .tube-ads-header {
+    position: static; /* Remove fixed positioning on mobile */
+    border-bottom: none;
+    padding: var(--spacing-3) 0;
+  }
+  
+  .tube-ads-header .tube-ad {
+    min-height: 60px;
+    padding: 0 var(--spacing-3);
+  }
+  
+  .tube-ads-below-header {
+    margin: 0 0 var(--spacing-4) 0;
+    padding: var(--spacing-3) 0;
+  }
+  
+  .tube-ads-below-header .tube-ad {
+    min-height: 80px;
+  }
+  
+  .tube-ads-in-content {
+    margin: var(--spacing-6) 0;
+    padding: var(--spacing-3);
+  }
+  
+  .tube-ads-in-content .tube-ad {
+    min-height: 200px;
+  }
+  
+  .footer-ad-container {
+    padding: var(--spacing-4) 0;
+  }
+  
+  .tube-ads-footer .tube-ad {
+    min-height: 150px;
+  }
+  
+  /* Remove fixed header padding on mobile */
+  body.has-header-ads {
+    padding-top: 0;
+  }
+}
+
+/* ==========================================
+   AD LOADING STATES
+   ========================================== */
+
+.tube-ad.loading {
+  position: relative;
+  background-color: var(--color-surface-alt);
+}
+
+.tube-ad.loading::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border: 2px solid var(--color-border);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: tube-ad-spin 1s linear infinite;
+}
+
+@keyframes tube-ad-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ==========================================
+   ACCESSIBILITY & PERFORMANCE
+   ========================================== */
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  .tube-ad {
+    transition: none;
+  }
+  
+  .tube-ad.loading::after {
+    animation: none;
+  }
+}
+
+/* High contrast support */
+@media (prefers-contrast: high) {
+  .tube-ad {
+    border-width: 2px;
+  }
+  
+  .tube-ads-header,
+  .tube-ads-below-header,
+  .footer-ad-container {
+    border-width: 2px;
+  }
+}
+
+/* Print styles - hide ads when printing */
+@media print {
+  .tube-ads-container,
+  .tube-ads-header,
+  .tube-ads-below-header,
+  .tube-ads-in-content,
+  .tube-ads-footer,
+  .footer-ad-container {
+    display: none !important;
+  }
+}

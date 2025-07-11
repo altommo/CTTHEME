@@ -1,0 +1,295 @@
+/**
+ * Archive and Footer Styles
+ * CustomTube Theme - Pages Layer
+ * 
+ * Styles for archive pages and the site footer
+ */
+
+/* ==========================================
+   ARCHIVE PAGE LAYOUT
+   ========================================== */
+
+.page-header {
+    margin-bottom: var(--spacing-6);
+}
+
+.page-title {
+    font-size: var(--font-size-3xl);
+    margin-bottom: var(--spacing-3);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text);
+}
+
+.dark-mode .page-title {
+    color: var(--color-dark-text);
+}
+
+.archive-description {
+    margin-bottom: var(--spacing-4);
+    color: var(--color-text-muted);
+}
+
+.dark-mode .archive-description {
+    color: var(--color-dark-text-muted);
+}
+
+/* Archive Filters */
+.archive-filters {
+    margin-top: var(--spacing-4);
+}
+
+.filter-toggle {
+    margin-bottom: var(--spacing-3);
+}
+
+.filter-button {
+    display: flex;
+    align-items: center;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    padding: var(--spacing-2) var(--spacing-3);
+    border-radius: var(--radius-md);
+    color: var(--color-text);
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+    transition: background-color var(--duration-fast), color var(--duration-fast);
+}
+
+.dark-mode .filter-button {
+    background-color: var(--color-dark-surface);
+    border-color: var(--color-dark-border);
+    color: var(--color-dark-text);
+}
+
+.filter-button:hover {
+    background-color: var(--color-primary-light);
+    color: #fff;
+}
+
+.filter-button svg {
+    margin-right: var(--spacing-2);
+}
+
+.filter-panel {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-4);
+    margin-bottom: var(--spacing-4);
+    display: none;
+}
+
+.dark-mode .filter-panel {
+    background-color: var(--color-dark-surface);
+    border-color: var(--color-dark-border);
+}
+
+.filter-panel.is-active {
+    display: block;
+}
+
+.filter-form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-4);
+}
+
+.filter-group {
+    margin-bottom: var(--spacing-3);
+}
+
+.filter-group label {
+    display: block;
+    margin-bottom: var(--spacing-2);
+    color: var(--color-text);
+    font-weight: var(--font-weight-medium);
+}
+
+.dark-mode .filter-group label {
+    color: var(--color-dark-text);
+}
+
+.filter-group select {
+    width: 100%;
+    padding: var(--spacing-2);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background-color: var(--color-background);
+    color: var(--color-text);
+}
+
+.dark-mode .filter-group select {
+    background-color: var(--color-dark-background);
+    border-color: var(--color-dark-border);
+    color: var(--color-dark-text);
+}
+
+.filter-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    grid-column: 1 / -1;
+    margin-top: var(--spacing-2);
+}
+
+.apply-filters {
+    background-color: var(--color-primary);
+    color: #fff;
+    border: none;
+    padding: var(--spacing-2) var(--spacing-4);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-weight: var(--font-weight-medium);
+    transition: background-color var(--duration-fast);
+}
+
+.apply-filters:hover {
+    background-color: var(--color-primary-dark);
+}
+
+.reset-filters {
+    color: var(--color-text-muted);
+    text-decoration: none;
+}
+
+.dark-mode .reset-filters {
+    color: var(--color-dark-text-muted);
+}
+
+.reset-filters:hover {
+    color: var(--color-primary);
+    text-decoration: underline;
+}
+
+/* ==========================================
+   FOOTER LAYOUT
+   ========================================== */
+
+.site-footer {
+    background-color: var(--color-surface);
+    border-top: 1px solid var(--color-border);
+    padding: var(--spacing-6) 0;
+    margin-top: var(--spacing-10);
+}
+
+.dark-mode .site-footer {
+    background-color: var(--color-dark-surface);
+    border-top-color: var(--color-dark-border);
+}
+
+.footer-widgets-container {
+    max-width: var(--container-max-width);
+    margin: 0 auto;
+    padding: 0 var(--spacing-4);
+}
+
+.footer-widget-area {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-6);
+    margin-bottom: var(--spacing-6);
+}
+
+.footer-widget {
+    margin-bottom: var(--spacing-4);
+}
+
+.footer-widget-title {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-3);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text);
+}
+
+.dark-mode .footer-widget-title {
+    color: var(--color-dark-text);
+}
+
+.footer-widget p {
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-3);
+}
+
+.dark-mode .footer-widget p {
+    color: var(--color-dark-text-muted);
+}
+
+.footer-widget ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.footer-widget li {
+    margin-bottom: var(--spacing-2);
+}
+
+.footer-widget a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--duration-fast);
+}
+
+.dark-mode .footer-widget a {
+    color: var(--color-dark-text-muted);
+}
+
+.footer-widget a:hover {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.site-info {
+    border-top: 1px solid var(--color-border);
+    padding-top: var(--spacing-4);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    max-width: var(--container-max-width);
+    margin: 0 auto;
+    padding-left: var(--spacing-4);
+    padding-right: var(--spacing-4);
+}
+
+.dark-mode .site-info {
+    border-top-color: var(--color-dark-border);
+}
+
+.copyright {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--spacing-3);
+}
+
+.dark-mode .copyright {
+    color: var(--color-dark-text-muted);
+}
+
+.footer-navigation ul {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.footer-navigation li {
+    margin-left: var(--spacing-3);
+    margin-bottom: var(--spacing-2);
+}
+
+.footer-navigation a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    font-size: var(--font-size-sm);
+    transition: color var(--duration-fast);
+}
+
+.dark-mode .footer-navigation a {
+    color: var(--color-dark-text-muted);
+}
+
+.footer-navigation a:hover {
+    color: var(--color-primary);
+}

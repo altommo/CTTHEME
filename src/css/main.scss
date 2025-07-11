@@ -1,0 +1,70 @@
+// src/css/main.scss
+// ==========================================================================
+// CUSTOMTUBE SCSS ARCHITECTURE - ENHANCED WITH MISSING FUNCTIONALITY
+// Your existing system enhanced with video player and advanced card features
+// ==========================================================================
+
+// ==========================================================================
+// 01 - FOUNDATIONS
+// Base styles, variables, and fundamental building blocks
+// ==========================================================================
+@use '01-foundations/reset';
+@use '01-foundations/variables'; // Enhanced with video and form variables
+@use '01-foundations/typography';
+
+// ==========================================================================
+// 02 - LAYOUT
+// Structural components and page layout systems
+// ==========================================================================
+@use '02-layout/grid';
+@use '02-layout/header-stack'; // New
+@use '02-layout/header';
+@use '02-layout/navigation';
+@use '02-layout/main-layout';
+@use '02-layout/sidebar';
+@use '02-layout/utility-bar'; // New
+@use '02-layout/secondary-nav'; // New
+@use '02-layout/footer'; // New
+
+// ==========================================================================
+// 03 - COMPONENTS
+// Reusable UI components and interface elements
+// ==========================================================================
+@use '03-components/buttons';
+@use '03-components/forms';
+@use '03-components/cards';
+@use '03-components/ads';
+@use '03-components/modals';
+@use '03-components/age-verification';
+@use '03-components/carousel'; // Add the new carousel styles
+
+// ==========================================================================
+// 04 - PAGES
+// Page-specific styles and overrides
+// ==========================================================================
+@use '04-pages/home';
+@use '04-pages/video';
+@use '04-pages/trending';
+@use '04-pages/auth';
+@use '04-pages/performers';
+@use '04-pages/categories';
+@use '04-pages/2257-compliance' as compliance;
+@use '04-pages/dmca';
+@use '04-pages/privacy-policy' as privacyPolicy;
+@use '04-pages/terms-of-service' as termsService;
+@use '04-pages/likedvideos';
+@use '04-pages/archive-footer' as archiveFooter;
+
+// ==========================================================================
+// 05 - UTILITIES
+// Helper classes, responsive utilities, and animations
+// ==========================================================================
+@use '05-utilities/responsive';
+@use '05-utilities/animations';
+@use '05-utilities/utilities';
+
+// ==========================================================================
+// 06 - ADMIN
+// Admin-specific styles and overrides
+// ==========================================================================
+@use 'admin/admin';

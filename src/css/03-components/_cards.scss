@@ -1,0 +1,638 @@
+/**
+ * Card Components
+ * CustomTube Theme - Components Layer
+ * 
+ * Video cards, content cards, and card-based layouts
+ */
+
+/* ==========================================
+   BASE CARD STYLES
+   ========================================== */
+
+.card {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: var(--transition-colors), var(--transition-shadow), var(--transition-transform);
+  position: relative;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+  border-color: var(--color-primary);
+}
+
+.card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.card-link:hover {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ==========================================
+   CARD STRUCTURE
+   ========================================== */
+
+.card-header {
+  padding: var(--spacing-4);
+  border-bottom: 1px solid var(--color-border);
+  background-color: var(--color-surface-alt);
+}
+
+.card-body {
+  padding: var(--spacing-4);
+  flex: 1;
+}
+
+.card-footer {
+  padding: var(--spacing-4);
+  border-top: 1px solid var(--color-border);
+  background-color: var(--color-surface-alt);
+  margin-top: auto;
+}
+
+.card-title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+  margin-bottom: var(--spacing-2);
+  line-height: var(--line-height-tight);
+}
+
+.card-subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin-bottom: var(--spacing-3);
+}
+
+.card-text {
+  color: var(--color-text);
+  line-height: var(--line-height-normal);
+  margin-bottom: var(--spacing-3);
+}
+
+.card-text:last-child {
+  margin-bottom: 0;
+}
+
+/* ==========================================
+   VIDEO CARD
+   ========================================== */
+
+.video-card {
+  position: relative;
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: transform var(--duration-200), box-shadow var(--duration-200); /* Updated transition */
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: var(--spacing-3); /* Added padding */
+  box-shadow: var(--shadow-base); /* Added initial shadow */
+}
+
+/* Make the entire card clickable by expanding the inner <a> */
+.video-card > a {
+  position: absolute;
+  inset: 0; /* Shorthand for top:0; right:0; bottom:0; left:0; */
+  display: block;
+  z-index: 1; /* Ensure it sits on top of other elements within the card */
+  text-decoration: none; /* Keep your existing link styles */
+  color: inherit;
+}
+
+.video-card:hover {
+  transform: translateY(-4px); /* Updated transform */
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3); /* Enhanced shadow on hover */
+  border-color: var(--color-primary); /* Highlight border on hover */
+}
+
+/* Overlay for hover effect */
+.video-card::after {
+  content: "";
+  position: absolute;
+  inset:0;
+  background: rgba(0,0,0,0);
+  transition: background var(--duration-200);
+  z-index: 3; /* Ensure it's above thumbnail but below play icon */
+}
+.video-card:hover::after {
+  background: rgba(0,0,0,0.2);
+}
+
+/* Video thumbnail container */
+.video-thumbnail-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/9; /* Forced 16:9 aspect ratio */
+  background-color: var(--color-surface-alt);
+  overflow: hidden;
+}
+
+.video-thumbnail img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensures image covers the area */
+  transition: var(--transition-transform);
+}
+
+.video-card:hover .video-thumbnail img {
+  transform: scale(1.05);
+}
+
+/* Video preview on hover */
+.video-preview {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity var(--duration-300) var(--ease-out);
+  z-index: 2;
+}
+
+.video-thumbnail:hover .video-preview {
+  opacity: 1;
+}
+
+/* Video overlay elements */
+.video-duration {
+  position: absolute;
+  bottom: var(--spacing-2);
+  right: var(--spacing-2);
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: var(--spacing-1) var(--spacing-2);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  z-index: 5;
+}
+
+.video-views {
+  /* Removed absolute positioning */
+  background-color: rgba(0, 0, 0, 0.8); /* Kept for consistency if needed */
+  color: white; /* Kept for consistency if needed */
+  padding: var(--spacing-1) var(--spacing-2); /* Kept for consistency if needed */
+  border-radius: var(--radius-sm); /* Kept for consistency if needed */
+  font-size: var(--font-size-xs); /* Kept for consistency if needed */
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  /* z-index: 5; Removed */
+}
+
+.video-views svg {
+  width: 12px;
+  height: 12px;
+}
+
+.video-quality {
+  position: absolute;
+  top: var(--spacing-2);
+  left: var(--spacing-2);
+  background-color: var(--color-primary);
+  color: white;
+  padding: var(--spacing-1) var(--spacing-2);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  z-index: 5;
+}
+
+/* Play button overlay */
+.overlay-play-icon { /* Renamed from .video-play-button */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%) scale(1); /* Always visible, no initial scale */
+  opacity:1; /* Always visible */
+  transition: opacity var(--duration-200), transform var(--duration-200); /* Smooth transition */
+  width: 60px; /* Explicit width */
+  height: 60px; /* Explicit height */
+  background-color: rgba(0, 0, 0, 0.7);
+  border: none;
+  border-radius: var(--radius-full);
+  color: white;
+  cursor: pointer;
+  z-index: 4; /* Ensure it's above the overlay */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.overlay-play-icon .play-icon-inner {
+  width: 100%; /* Fill parent */
+  height: 100%; /* Fill parent */
+  display: flex; /* Ensure flex properties for centering */
+  align-items: center;
+  justify-content: center;
+}
+
+.overlay-play-icon .play-icon-inner::before { /* Moved from .video-play-button::before */
+  content: '';
+  width: 0;
+  height: 0;
+  border-top: 12px solid transparent;
+  border-bottom: 12px solid transparent;
+  border-left: 16px solid white;
+  margin-left: 3px; /* Adjust margin to center triangle */
+}
+
+.video-card:hover .overlay-play-icon { /* Updated hover state */
+  background-color: rgba(255, 64, 87, 0.9); /* Keep original hover background */
+  transform: translate(-50%,-50%) scale(1.1); /* Slightly larger on hover */
+}
+
+/* Video content */
+.video-card-content { /* Renamed from .video-content to avoid conflict with .video-content in single-video.php */
+  /* Removed padding here */
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.video-title {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+  padding: var(--spacing-3) var(--spacing-4) 0; /* Updated padding */
+  line-height: 1.3; /* Updated line-height */
+  display: -webkit-box; /* Added for line clamping */
+  -webkit-line-clamp: 2; /* Clamps text to 2 lines */
+  -webkit-box-orient: vertical; /* Required for line clamping */
+  overflow: hidden; /* Required for line clamping */
+  text-overflow: ellipsis; /* Required for line clamping */
+  min-height: 3em; /* Force consistent height for two lines */
+}
+
+.video-title a {
+  color: inherit;
+  text-decoration: none;
+  transition: var(--transition-colors);
+}
+
+.video-title a:hover {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.video-meta {
+  display: flex;
+  align-items: center; /* Re-added align-items */
+  justify-content: space-between; /* Re-added justify-content */
+  /* Removed flex-wrap and gap */
+  padding: var(--spacing-2) var(--spacing-4) var(--spacing-4); /* Updated padding */
+  margin-top: auto; /* Push to the bottom of the flex column */
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.video-date {
+  font-size: var(--font-size-xs);
+}
+
+.video-rating {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-1);
+}
+
+.video-rating svg {
+  width: 14px;
+  height: 14px;
+  fill: var(--color-warning);
+}
+
+/* ==========================================
+   CARD VARIANTS
+   ========================================== */
+
+/* Compact card */
+.card-compact {
+  padding: var(--spacing-3);
+}
+
+.card-compact .card-header,
+.card-compact .card-body,
+.card-compact .card-footer {
+  padding: var(--spacing-3);
+}
+
+/* Large card */
+.card-lg {
+  border-radius: var(--radius-xl);
+}
+
+.card-lg .card-header,
+.card-lg .card-body,
+.card-lg .card-footer {
+  padding: var(--spacing-6);
+}
+
+/* Borderless card */
+.card-borderless {
+  border: none;
+  box-shadow: var(--shadow-base);
+}
+
+/* Elevated card */
+.card-elevated {
+  box-shadow: var(--shadow-lg);
+  border: none;
+}
+
+.card-elevated:hover {
+  box-shadow: var(--shadow-xl);
+  transform: translateY(-4px);
+}
+
+/* Horizontal card */
+.card-horizontal {
+  flex-direction: row;
+}
+
+.card-horizontal .video-thumbnail {
+  flex-shrink: 0;
+  width: 200px;
+  padding-top: 0;
+  height: 120px;
+}
+
+.card-horizontal .video-card-content {
+  flex: 1;
+}
+
+/* ==========================================
+   CARD ACTIONS
+   ========================================== */
+
+.card-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  padding: var(--spacing-3) var(--spacing-4);
+  border-top: 1px solid var(--color-border);
+  background-color: var(--color-surface-alt);
+}
+
+.card-action {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  padding: var(--spacing-2);
+  background: none;
+  border: none;
+  border-radius: var(--radius-base);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  transition: var(--transition-colors);
+  text-decoration: none;
+}
+
+.card-action:hover {
+  color: var(--color-primary);
+  background-color: var(--color-surface);
+  text-decoration: none;
+}
+
+.card-action.is-active {
+  color: var(--color-primary);
+}
+
+/* Like button */
+.card-action-like.is-liked {
+  color: var(--color-error);
+}
+
+.card-action-like.is-liked svg {
+  fill: currentColor;
+}
+
+/* ==========================================
+   CARD GRID LAYOUTS
+   ========================================== */
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--spacing-6);
+  width: 100%;
+}
+
+.card-grid-sm {
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--spacing-4);
+}
+
+.card-grid-lg {
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--spacing-8);
+}
+
+.card-grid-dense {
+  grid-auto-flow: dense;
+}
+
+/* ==========================================
+   FEATURED CARDS
+   ========================================== */
+
+.card-featured {
+  position: relative;
+  border: 2px solid var(--color-primary);
+}
+
+.card-featured::before {
+  content: 'Featured';
+  position: absolute;
+  top: var(--spacing-3);
+  right: var(--spacing-3);
+  background-color: var(--color-primary);
+  color: white;
+  padding: var(--spacing-1) var(--spacing-2);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  z-index: 10;
+}
+
+/* ==========================================
+   LOADING CARDS
+   ========================================== */
+
+.card-skeleton {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.card-skeleton .skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--color-surface-alt) 25%,
+    var(--color-border) 50%,
+    var(--color-surface-alt) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+}
+
+.skeleton-thumbnail {
+  width: 100%;
+  height: 160px;
+}
+
+.skeleton-content {
+  padding: var(--spacing-4);
+}
+
+.skeleton-title {
+  height: 20px;
+  margin-bottom: var(--spacing-2);
+  border-radius: var(--radius-sm);
+}
+
+.skeleton-text {
+  height: 14px;
+  margin-bottom: var(--spacing-2);
+  border-radius: var(--radius-sm);
+}
+
+.skeleton-text-short {
+  width: 60%;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* ==========================================
+   RESPONSIVE CARDS
+   ========================================== */
+
+@media (max-width: 768px) {
+  .card-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-4);
+  }
+  
+  .card-horizontal {
+    flex-direction: column;
+  }
+  
+  .card-horizontal .video-thumbnail {
+    width: 100%;
+    padding-top: 56.25%;
+    height: auto;
+  }
+  
+  .video-card-content {
+    padding: var(--spacing-3);
+  }
+  
+  .card-actions {
+    padding: var(--spacing-2) var(--spacing-3);
+  }
+}
+
+@media (max-width: 480px) {
+  .card-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-3);
+  }
+  
+  .overlay-play-icon { /* Updated selector */
+    width: 48px;
+    height: 48px;
+  }
+  
+  .overlay-play-icon .play-icon-inner::before { /* Updated selector */
+    border-top-width: 10px;
+    border-bottom-width: 10px;
+    border-left-width: 14px;
+  }
+}
+
+/* ==========================================
+   ACCESSIBILITY ENHANCEMENTS
+   ========================================== */
+
+.card:focus-within {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.overlay-play-icon:focus { /* Updated selector */
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .card {
+    border-width: 2px;
+  }
+  
+  .overlay-play-icon { /* Updated selector */
+    border: 2px solid white;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .video-thumbnail img,
+  .overlay-play-icon, /* Updated selector */
+  .skeleton {
+    transition: none;
+    animation: none;
+  }
+  
+  .card:hover,
+  .video-card:hover {
+    transform: none;
+  }
+}
+
+/* ==========================================
+   PRINT STYLES
+   ========================================== */
+
+@media print {
+  .card {
+    break-inside: avoid;
+    box-shadow: none;
+    border: 1px solid #000;
+  }
+  
+  .overlay-play-icon, /* Updated selector */
+  .card-actions {
+    display: none;
+  }
+  
+  .video-thumbnail {
+    background: #f5f5f5;
+  }
+}

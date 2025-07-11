@@ -1,0 +1,620 @@
+/**
+ * Video Player Components
+ * CustomTube Theme - Components Layer
+ * 
+ * Advanced video player with custom controls, progress bar, and overlays
+ */
+
+/* ==========================================
+   VIDEO PLAYER CONTAINER
+   ========================================== */
+
+.video-player-container {
+  position: relative;
+  width: 100%;
+  background-color: #000;
+  border-radius: var(--radius-video);
+  overflow: hidden;
+  margin-bottom: var(--spacing-4);
+  box-shadow: var(--shadow-video-lg);
+}
+
+.video-player {
+  width: 100%;
+  aspect-ratio: var(--aspect-video);
+  background-color: #000;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.video-player video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* ==========================================
+   CUSTOM CONTROLS OVERLAY
+   ========================================== */
+
+.custom-controls {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--video-overlay-gradient);
+  padding: var(--spacing-6) var(--spacing-4) var(--spacing-3);
+  transition: opacity var(--duration-300) var(--ease-out), 
+              transform var(--duration-300) var(--ease-out);
+  opacity: 0;
+  transform: translateY(100%);
+  z-index: var(--z-video-controls);
+}
+
+.video-player:hover .custom-controls,
+.custom-controls.is-visible,
+.video-player.is-playing .custom-controls {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.video-player.is-paused .custom-controls {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ==========================================
+   PROGRESS BAR
+   ========================================== */
+
+.video-progress {
+  position: relative;
+  height: 4px;
+  background-color: var(--video-progress-bg);
+  cursor: pointer;
+  margin-bottom: var(--spacing-3);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.video-progress:hover {
+  height: 6px;
+}
+
+.progress-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background-color: var(--video-progress-fill);
+  border-radius: 2px;
+  width: 0%;
+  transition: width var(--duration-100) linear;
+}
+
+.progress-buffer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+  width: 0%;
+}
+
+.progress-thumb {
+  position: absolute;
+  top: 50%;
+  right: -6px;
+  width: 12px;
+  height: 12px;
+  background-color: var(--color-primary);
+  border-radius: var(--radius-full);
+  transform: translateY(-50%) scale(0);
+  transition: transform var(--duration-200) var(--ease-out);
+}
+
+.video-progress:hover .progress-thumb {
+  transform: translateY(-50%) scale(1);
+}
+
+/* Time tooltip */
+.progress-tooltip {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--video-control-bg);
+  color: white;
+  padding: var(--spacing-1) var(--spacing-2);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-xs);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  margin-bottom: var(--spacing-2);
+  transition: opacity var(--duration-200) var(--ease-out);
+}
+
+.video-progress:hover .progress-tooltip {
+  opacity: 1;
+}
+
+/* ==========================================
+   CONTROL BUTTONS
+   ========================================== */
+
+.control-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: white;
+  gap: var(--spacing-3);
+}
+
+.control-buttons-left,
+.control-buttons-right {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+}
+
+.control-button {
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: var(--spacing-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-base);
+  transition: var(--transition-colors);
+  position: relative;
+}
+
+.control-button:hover {
+  background-color: var(--video-control-hover-bg);
+  color: var(--color-primary);
+}
+
+.control-button:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.control-button svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+/* Specific button styles */
+.play-pause-button svg {
+  width: 24px;
+  height: 24px;
+}
+
+.fullscreen-button svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ==========================================
+   VOLUME CONTROL
+   ========================================== */
+
+.volume-control {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.volume-slider {
+  width: 80px;
+  height: 4px;
+  background-color: var(--video-progress-bg);
+  border-radius: 2px;
+  position: relative;
+  cursor: pointer;
+  opacity: 0;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: opacity var(--duration-200) var(--ease-out),
+              transform var(--duration-200) var(--ease-out);
+}
+
+.volume-control:hover .volume-slider,
+.volume-slider.is-active {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.volume-fill {
+  height: 100%;
+  background-color: var(--color-primary);
+  border-radius: 2px;
+  width: 100%;
+}
+
+/* ==========================================
+   TIME DISPLAY
+   ========================================== */
+
+.time-display {
+  font-size: var(--font-size-sm);
+  font-family: var(--font-family-mono);
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  min-width: 80px;
+}
+
+.time-current {
+  color: var(--color-primary);
+}
+
+.time-separator {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.time-duration {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* ==========================================
+   LOADING STATES
+   ========================================== */
+
+.video-loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: var(--z-video-loading);
+}
+
+.loading-spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-top-color: var(--color-primary);
+  border-radius: var(--radius-full);
+  animation: video-spin 1s linear infinite;
+}
+
+@keyframes video-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Loading overlay */
+.video-loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  z-index: var(--z-video-overlay);
+}
+
+.loading-text {
+  color: white;
+  font-size: var(--font-size-lg);
+}
+
+/* ==========================================
+   VIDEO PLACEHOLDER
+   ========================================== */
+
+.video-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  min-height: 300px;
+  background: linear-gradient(135deg, var(--color-surface) 0%, var(--color-surface-alt) 100%);
+  color: var(--color-text);
+  text-align: center;
+  padding: var(--spacing-6);
+}
+
+.placeholder-icon {
+  width: 64px;
+  height: 64px;
+  color: var(--color-text-muted);
+  margin-bottom: var(--spacing-4);
+}
+
+.placeholder-title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--spacing-2);
+}
+
+.placeholder-text {
+  color: var(--color-text-muted);
+  max-width: 300px;
+}
+
+/* ==========================================
+   ENHANCED CARD PREVIEWS
+   ========================================== */
+
+.video-preview {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-video);
+}
+
+.video-preview .preview-poster {
+  width: 100%;
+  height: auto;
+  display: block;
+  aspect-ratio: var(--aspect-video);
+  object-fit: cover;
+  transition: opacity var(--duration-300) var(--ease-out);
+}
+
+.video-preview .preview-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity var(--duration-300) var(--ease-out);
+  pointer-events: none;
+}
+
+.video-preview:hover .preview-video {
+  opacity: 1;
+}
+
+.video-preview:hover .preview-poster {
+  opacity: 0;
+}
+
+/* Card overlay enhancements */
+.card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--video-overlay-gradient);
+  opacity: 0;
+  transition: opacity var(--duration-300) var(--ease-out);
+  display: flex;
+  align-items: flex-end;
+  padding: var(--spacing-4);
+  z-index: var(--z-video-overlay);
+}
+
+.video-card:hover .card-overlay {
+  opacity: 1;
+}
+
+.card-overlay-content {
+  color: white;
+  width: 100%;
+}
+
+.card-overlay-title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--spacing-2);
+}
+
+.card-overlay-meta {
+  font-size: var(--font-size-sm);
+  opacity: 0.9;
+}
+
+/* Enhanced play icon */
+.card-play-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 64px;
+  height: 64px;
+  background-color: var(--video-control-bg);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  opacity: 0;
+  transition: opacity var(--duration-300) var(--ease-out),
+              transform var(--duration-300) var(--ease-out);
+  z-index: calc(var(--z-video-overlay) + 1);
+}
+
+.card-play-icon::before {
+  content: '';
+  width: 0;
+  height: 0;
+  border-top: 12px solid transparent;
+  border-bottom: 12px solid transparent;
+  border-left: 20px solid white;
+  margin-left: 4px;
+}
+
+.video-card:hover .card-play-icon {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+/* Video badge */
+.card-badge {
+  position: absolute;
+  top: var(--spacing-3);
+  right: var(--spacing-3);
+  background-color: var(--color-primary);
+  color: white;
+  padding: var(--spacing-1) var(--spacing-2);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  z-index: calc(var(--z-video-overlay) + 1);
+}
+
+.card-badge.badge-new {
+  background-color: var(--color-success);
+}
+
+.card-badge.badge-hot {
+  background-color: var(--color-warning);
+  color: var(--color-text);
+}
+
+.card-badge.badge-premium {
+  background: linear-gradient(135deg, var(--color-secondary), var(--color-primary));
+}
+
+/* ==========================================
+   RESPONSIVE VIDEO PLAYER
+   ========================================== */
+
+@media (max-width: 768px) {
+  .custom-controls {
+    padding: var(--spacing-4) var(--spacing-3) var(--spacing-2);
+  }
+  
+  .control-buttons {
+    gap: var(--spacing-2);
+  }
+  
+  .control-button {
+    padding: var(--spacing-1);
+  }
+  
+  .control-button svg {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .volume-slider {
+    width: 60px;
+  }
+  
+  .time-display {
+    font-size: var(--font-size-xs);
+    min-width: 60px;
+  }
+  
+  .card-play-icon {
+    width: 48px;
+    height: 48px;
+  }
+  
+  .card-play-icon::before {
+    border-top-width: 8px;
+    border-bottom-width: 8px;
+    border-left-width: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .video-player-container {
+    border-radius: var(--radius-base);
+  }
+  
+  .custom-controls {
+    padding: var(--spacing-3) var(--spacing-2) var(--spacing-1);
+  }
+  
+  .control-buttons-right {
+    gap: var(--spacing-1);
+  }
+  
+  .volume-control {
+    display: none; /* Hide volume on very small screens */
+  }
+  
+  .progress-tooltip {
+    font-size: var(--font-size-xs);
+  }
+}
+
+/* ==========================================
+   ACCESSIBILITY ENHANCEMENTS
+   ========================================== */
+
+.control-button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Screen reader labels */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .custom-controls {
+    background: rgba(0, 0, 0, 0.9);
+  }
+  
+  .control-button {
+    border: 1px solid white;
+  }
+  
+  .video-progress {
+    border: 1px solid white;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .custom-controls,
+  .progress-bar,
+  .card-play-icon,
+  .video-preview .preview-video,
+  .video-preview .preview-poster {
+    transition: none;
+  }
+  
+  .loading-spinner {
+    animation: none;
+  }
+  
+  .video-card:hover .card-play-icon {
+    transform: translate(-50%, -50%);
+  }
+}
+
+/* ==========================================
+   PRINT STYLES
+   ========================================== */
+
+@media print {
+  .video-player-container,
+  .custom-controls,
+  .card-play-icon {
+    display: none;
+  }
+}

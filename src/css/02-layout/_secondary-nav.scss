@@ -1,0 +1,137 @@
+/**
+ * Secondary Navigation Layout
+ * CustomTube Theme - Layout Layer
+ *
+ * Navigation bar below the main header, often for categories or specific sections.
+ */
+
+.secondary-nav {
+  background-color: var(--color-black); /* #111 */
+  border-top: 1px solid var(--color-dark-border); /* #222 */
+  height: var(--secondary-nav-height); /* Use variable for height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 var(--spacing-4); /* 0 24px */
+  /* Removed positioning as it's now handled by header-stack */
+}
+
+.secondary-nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: var(--spacing-8); /* 32px gap */
+  align-items: center;
+  flex-wrap: nowrap; /* Keep links on a single line */
+  overflow-x: auto; /* Allow horizontal scrolling if needed */
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Hide scrollbar for Firefox */
+  overflow: visible; /* Allow the dropdowns to escape their parent container */
+}
+
+.secondary-nav-list::-webkit-scrollbar {
+  display: none; /* Hide scrollbar for Webkit browsers */
+}
+
+.secondary-nav-list li {
+  flex-shrink: 0; /* Prevent items from shrinking */
+  position: relative; /* Make parent LI positioned for absolute dropdown */
+}
+
+.secondary-nav-list a {
+  font-size: var(--font-size-sm); /* 0.875rem */
+  color: var(--color-text-muted); /* #bbb */
+  text-decoration: none;
+  white-space: nowrap; /* Prevent wrapping */
+  transition: color var(--duration-150) ease-in-out;
+  display: flex; /* For potential icons/dropdown arrows */
+  align-items: center;
+  gap: var(--spacing-1);
+}
+
+.secondary-nav-list a:hover {
+  color: var(--color-white); /* #fff */
+}
+
+/* Ad-specific links within secondary nav */
+.secondary-nav-list .nav-ad {
+  /* Style identically to other links to hide sponsor status */
+  /* You can add a subtle indicator if required by ad policy, e.g., a small star */
+  font-weight: var(--font-weight-semibold); /* Make them slightly bolder */
+  color: var(--color-primary); /* Use primary color for emphasis */
+}
+
+.secondary-nav-list .nav-ad:hover {
+  color: var(--color-primary-light);
+}
+
+/* Dropdown arrow styling */
+.secondary-nav-list a[href$="▾"]::after {
+  content: '▾'; /* Unicode for downward-pointing triangle */
+  font-size: 0.7em;
+  margin-left: 0.2em;
+  vertical-align: middle;
+}
+
+/* Secondary Nav Dropdowns (vertical) */
+.secondary-nav-list .dropdown-menu {
+  display: none; /* Hidden by default */
+  position: absolute;
+  top: 100%;
+  left: 0; /* Align to the left edge of the parent LI */
+  background-color: var(--color-black-alt);
+  border: 1px solid var(--color-dark-border);
+  border-radius: var(--radius-base);
+  padding: var(--spacing-2);
+  min-width: 180px;
+  box-shadow: var(--shadow-md);
+  z-index: var(--z-dropdown);
+  flex-direction: column; /* Ensure vertical list */
+}
+
+.secondary-nav-list li:hover > .dropdown-menu,
+.secondary-nav-list li.is-active > .dropdown-menu { /* is-active for JS control */
+  display: flex; /* Show on hover/active */
+}
+
+.secondary-nav-list .dropdown-menu li {
+  margin: 0;
+}
+
+.secondary-nav-list .dropdown-menu a {
+  padding: var(--spacing-2) var(--spacing-3);
+  font-size: var(--font-size-sm);
+  text-transform: none;
+  color: var(--color-text-muted);
+  white-space: nowrap; /* Prevent wrapping */
+}
+
+.secondary-nav-list .dropdown-menu a:hover {
+  background-color: var(--color-dark-surface-alt);
+  color: var(--color-white);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .secondary-nav {
+    height: auto; /* Allow height to adjust */
+    padding: var(--spacing-2) var(--spacing-3); /* Smaller padding */
+  }
+
+  .secondary-nav-list {
+    gap: var(--spacing-4); /* Smaller gap */
+    justify-content: flex-start; /* Align left on smaller screens */
+  }
+}
+
+@media (max-width: 768px) {
+  .secondary-nav {
+    padding: var(--spacing-1) var(--spacing-2);
+  }
+
+  .secondary-nav-list {
+    font-size: 0.8rem; /* Smaller font size */
+    gap: var(--spacing-3);
+  }
+}

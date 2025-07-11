@@ -1,0 +1,648 @@
+/**
+ * Enhanced Form Validation
+ * CustomTube Theme - Components Layer
+ * 
+ * Advanced form validation states, input groups, and enhanced form components
+ */
+
+/* ==========================================
+   INPUT GROUPS (Missing from your forms.scss)
+   ========================================== */
+
+.input-group {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  position: relative;
+}
+
+.input-group > .form-input {
+  flex: 1;
+  min-width: 0;
+  position: relative;
+  z-index: 2;
+}
+
+.input-group > .form-input:not(:first-child) {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  margin-left: -1px;
+}
+
+.input-group > .form-input:not(:last-child) {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.input-group > .form-input:focus {
+  z-index: 3;
+}
+
+.input-group > .btn {
+  position: relative;
+  z-index: 2;
+}
+
+.input-group > .btn:not(:first-child) {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  margin-left: -1px;
+}
+
+.input-group > .btn:not(:last-child) {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.input-group > .btn:focus {
+  z-index: 3;
+}
+
+/* Input group text/addon */
+.input-group-text {
+  display: flex;
+  align-items: center;
+  padding: var(--spacing-3);
+  background-color: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  white-space: nowrap;
+  border-radius: var(--radius-base);
+}
+
+.input-group-text:not(:first-child) {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-left: 0;
+}
+
+.input-group-text:not(:last-child) {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-right: 0;
+}
+
+/* ==========================================
+   ENHANCED FORM VALIDATION STATES
+   ========================================== */
+
+/* Valid state */
+.form-group.is-valid .form-input,
+.form-group.is-valid .form-select,
+.form-group.is-valid .form-textarea {
+  border-color: var(--color-success);
+  box-shadow: 0 0 0 0.2rem var(--color-success-light);
+}
+
+.form-group.is-valid .form-input:focus,
+.form-group.is-valid .form-select:focus,
+.form-group.is-valid .form-textarea:focus {
+  border-color: var(--color-success);
+  box-shadow: 0 0 0 0.2rem var(--color-success-light);
+}
+
+.form-group.is-valid .form-label {
+  color: var(--color-success);
+}
+
+.form-group.is-valid .form-feedback {
+  display: block;
+}
+
+/* Invalid state */
+.form-group.is-invalid .form-input,
+.form-group.is-invalid .form-select,
+.form-group.is-invalid .form-textarea {
+  border-color: var(--color-error);
+  box-shadow: 0 0 0 0.2rem var(--color-error-light);
+}
+
+.form-group.is-invalid .form-input:focus,
+.form-group.is-invalid .form-select:focus,
+.form-group.is-invalid .form-textarea:focus {
+  border-color: var(--color-error);
+  box-shadow: 0 0 0 0.2rem var(--color-error-light);
+}
+
+.form-group.is-invalid .form-label {
+  color: var(--color-error);
+}
+
+.form-group.is-invalid .invalid-feedback {
+  display: block;
+}
+
+/* Warning state */
+.form-group.is-warning .form-input,
+.form-group.is-warning .form-select,
+.form-group.is-warning .form-textarea {
+  border-color: var(--color-warning);
+  box-shadow: 0 0 0 0.2rem var(--color-warning-light);
+}
+
+.form-group.is-warning .form-input:focus,
+.form-group.is-warning .form-select:focus,
+.form-group.is-warning .form-textarea:focus {
+  border-color: var(--color-warning);
+  box-shadow: 0 0 0 0.2rem var(--color-warning-light);
+}
+
+.form-group.is-warning .form-label {
+  color: var(--color-warning);
+}
+
+.form-group.is-warning .warning-feedback {
+  display: block;
+}
+
+/* ==========================================
+   ENHANCED FEEDBACK MESSAGES
+   ========================================== */
+
+.valid-feedback {
+  display: none;
+  width: 100%;
+  margin-top: var(--spacing-1);
+  font-size: var(--font-size-xs);
+  color: var(--color-success);
+  line-height: var(--line-height-tight);
+}
+
+.invalid-feedback {
+  display: none;
+  width: 100%;
+  margin-top: var(--spacing-1);
+  font-size: var(--font-size-xs);
+  color: var(--color-error);
+  line-height: var(--line-height-tight);
+}
+
+.warning-feedback {
+  display: none;
+  width: 100%;
+  margin-top: var(--spacing-1);
+  font-size: var(--font-size-xs);
+  color: var(--color-warning);
+  line-height: var(--line-height-tight);
+}
+
+/* Feedback with icons */
+.feedback-with-icon {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-1);
+}
+
+.feedback-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.feedback-icon.valid {
+  color: var(--color-success);
+}
+
+.feedback-icon.invalid {
+  color: var(--color-error);
+}
+
+.feedback-icon.warning {
+  color: var(--color-warning);
+}
+
+/* ==========================================
+   ENHANCED CHECKBOXES & RADIOS
+   ========================================== */
+
+.form-check {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-2);
+  margin-bottom: var(--spacing-3);
+  position: relative;
+}
+
+.form-check-input {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  border: 2px solid var(--color-border);
+  background-color: var(--color-surface);
+  transition: var(--transition-all);
+  cursor: pointer;
+  flex-shrink: 0;
+  margin-top: 2px;
+  position: relative;
+}
+
+.form-check-input[type="checkbox"] {
+  border-radius: var(--radius-sm);
+}
+
+.form-check-input[type="radio"] {
+  border-radius: var(--radius-full);
+}
+
+.form-check-input:checked {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.form-check-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(255, 64, 87, 0.25);
+}
+
+.form-check-input:disabled {
+  background-color: var(--color-surface-alt);
+  border-color: var(--color-border);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Custom checkbox checkmark */
+.form-check-input[type="checkbox"]:checked::after {
+  content: '';
+  position: absolute;
+  top: 1px;
+  left: 4px;
+  width: 6px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* Custom radio dot */
+.form-check-input[type="radio"]:checked::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  background-color: white;
+  border-radius: var(--radius-full);
+  transform: translate(-50%, -50%);
+}
+
+.form-check-label {
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+  cursor: pointer;
+  line-height: var(--line-height-normal);
+  user-select: none;
+}
+
+.form-check-input:disabled ~ .form-check-label {
+  color: var(--color-text-muted);
+  cursor: not-allowed;
+}
+
+/* Inline checkboxes/radios */
+.form-check-inline {
+  display: inline-flex;
+  margin-right: var(--spacing-4);
+  margin-bottom: 0;
+}
+
+/* ==========================================
+   ENHANCED SWITCH COMPONENT
+   ========================================== */
+
+.form-switch {
+  position: relative;
+  padding-left: 0;
+}
+
+.form-switch .form-check-input {
+  width: 48px;
+  height: 24px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-border);
+  border: none;
+  background-image: none;
+  position: relative;
+  cursor: pointer;
+  transition: var(--transition-all);
+}
+
+.form-switch .form-check-input::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  background-color: white;
+  border-radius: var(--radius-full);
+  transition: var(--transition-all);
+  box-shadow: var(--shadow-sm);
+}
+
+.form-switch .form-check-input:checked {
+  background-color: var(--color-primary);
+}
+
+.form-switch .form-check-input:checked::before {
+  transform: translateX(24px);
+}
+
+.form-switch .form-check-input:focus {
+  box-shadow: 0 0 0 0.2rem rgba(255, 64, 87, 0.25);
+}
+
+.form-switch .form-check-input:disabled {
+  background-color: var(--color-surface-alt);
+  cursor: not-allowed;
+}
+
+.form-switch .form-check-input:disabled::before {
+  background-color: var(--color-text-muted);
+}
+
+/* Switch sizes */
+.form-switch-sm .form-check-input {
+  width: 36px;
+  height: 18px;
+}
+
+.form-switch-sm .form-check-input::before {
+  width: 14px;
+  height: 14px;
+}
+
+.form-switch-sm .form-check-input:checked::before {
+  transform: translateX(18px);
+}
+
+.form-switch-lg .form-check-input {
+  width: 56px;
+  height: 28px;
+}
+
+.form-switch-lg .form-check-input::before {
+  width: 24px;
+  height: 24px;
+}
+
+.form-switch-lg .form-check-input:checked::before {
+  transform: translateX(28px);
+}
+
+/* ==========================================
+   FORM VALIDATION ANIMATIONS
+   ========================================== */
+
+.form-input.shake {
+  animation: form-shake 0.5s ease-in-out;
+}
+
+@keyframes form-shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+  20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+.form-group.fade-in {
+  animation: form-fade-in 0.3s ease-out;
+}
+
+@keyframes form-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==========================================
+   FORM PROGRESS INDICATOR
+   ========================================== */
+
+.form-progress {
+  margin-bottom: var(--spacing-6);
+}
+
+.form-progress-bar {
+  width: 100%;
+  height: 6px;
+  background-color: var(--color-surface-alt);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.form-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+  border-radius: var(--radius-full);
+  transition: width var(--duration-300) var(--ease-out);
+  width: 0%;
+}
+
+.form-progress-steps {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--spacing-2);
+}
+
+.form-progress-step {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  position: relative;
+}
+
+.form-progress-step.is-active {
+  color: var(--color-primary);
+  font-weight: var(--font-weight-medium);
+}
+
+.form-progress-step.is-complete {
+  color: var(--color-success);
+}
+
+/* ==========================================
+   FLOATING LABELS ENHANCEMENT
+   ========================================== */
+
+.form-floating {
+  position: relative;
+}
+
+.form-floating > .form-input,
+.form-floating > .form-select,
+.form-floating > .form-textarea {
+  height: calc(3.5rem + 2px);
+  padding: 1rem 0.75rem 0.25rem;
+  line-height: 1.25;
+}
+
+.form-floating > .form-select {
+  padding-top: 1.625rem;
+  padding-bottom: 0.625rem;
+}
+
+.form-floating > .form-input::placeholder,
+.form-floating > .form-textarea::placeholder {
+  color: transparent;
+}
+
+.form-floating > .form-input:focus::placeholder,
+.form-floating > .form-textarea:focus::placeholder {
+  color: var(--color-text-muted);
+}
+
+.form-floating > .form-input:not(:placeholder-shown),
+.form-floating > .form-input:focus,
+.form-floating > .form-select:not([value=""]),
+.form-floating > .form-select:focus,
+.form-floating > .form-textarea:not(:placeholder-shown),
+.form-floating > .form-textarea:focus {
+  padding-top: 1.625rem;
+  padding-bottom: 0.625rem;
+}
+
+.form-floating > .form-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  padding: 1rem 0.75rem;
+  pointer-events: none;
+  border: 1px solid transparent;
+  transform-origin: 0 0;
+  transition: var(--transition-all);
+  color: var(--color-text-muted);
+}
+
+.form-floating > .form-input:focus ~ .form-label,
+.form-floating > .form-input:not(:placeholder-shown) ~ .form-label,
+.form-floating > .form-select:focus ~ .form-label,
+.form-floating > .form-select:not([value=""]) ~ .form-label,
+.form-floating > .form-textarea:focus ~ .form-label,
+.form-floating > .form-textarea:not(:placeholder-shown) ~ .form-label {
+  opacity: 0.65;
+  transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem);
+}
+
+/* ==========================================
+   RESPONSIVE FORM ENHANCEMENTS
+   ========================================== */
+
+@media (max-width: 640px) {
+  .input-group {
+    flex-direction: column;
+  }
+  
+  .input-group > .form-input,
+  .input-group > .btn,
+  .input-group-text {
+    border-radius: var(--radius-base);
+    border: 1px solid var(--color-border);
+  }
+  
+  .input-group > .form-input:not(:first-child),
+  .input-group > .btn:not(:first-child),
+  .input-group-text:not(:first-child) {
+    margin-top: -1px;
+    margin-left: 0;
+  }
+  
+  .form-switch .form-check-input {
+    width: 44px;
+    height: 22px;
+  }
+  
+  .form-switch .form-check-input::before {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .form-switch .form-check-input:checked::before {
+    transform: translateX(22px);
+  }
+}
+
+/* ==========================================
+   ACCESSIBILITY ENHANCEMENTS
+   ========================================== */
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .form-input,
+  .form-select,
+  .form-textarea,
+  .form-check-input {
+    border-width: 2px;
+  }
+  
+  .form-switch .form-check-input::before {
+    border: 2px solid var(--color-text);
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .form-input,
+  .form-select,
+  .form-textarea,
+  .form-check-input,
+  .form-switch .form-check-input,
+  .form-switch .form-check-input::before,
+  .form-floating > .form-label {
+    transition: none;
+  }
+  
+  .form-input.shake {
+    animation: none;
+  }
+  
+  .form-group.fade-in {
+    animation: none;
+  }
+}
+
+/* Focus visible for keyboard users */
+.form-input:focus-visible,
+.form-select:focus-visible,
+.form-textarea:focus-visible,
+.form-check-input:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* ==========================================
+   PRINT STYLES
+   ========================================== */
+
+@media print {
+  .form-input,
+  .form-select,
+  .form-textarea {
+    border: 1px solid #000;
+    background: transparent;
+  }
+  
+  .form-check-input {
+    -webkit-appearance: checkbox;
+    appearance: checkbox;
+  }
+  
+  .form-switch .form-check-input {
+    -webkit-appearance: checkbox;
+    appearance: checkbox;
+  }
+  
+  .invalid-feedback,
+  .valid-feedback,
+  .warning-feedback {
+    display: none;
+  }
+}

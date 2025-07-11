@@ -1,0 +1,151 @@
+/**
+ * Lustful Clips - Core Variables & Theme System
+ * Dark-mode first with light mode alternative
+ */
+
+:root {
+  /* Backgrounds & Surfaces */
+  --lc-bg: #0f0f0f;           /* page background */
+  --lc-surface: #171717;      /* cards, nav, modals */
+  --lc-surface-alt: #1f1f1f;  /* secondary surface, hover states */
+
+  /* Text */
+  --lc-text-primary: #e8e0d8; /* cream/off-white */
+  --lc-text-secondary: #a8a0a0; /* muted gray */
+
+  /* Accent */
+  --lc-accent: #e63946;       /* Lustful red */
+  --lc-accent-hover: #f25b67; /* Lighter red for hover */
+  --lc-accent-muted: rgba(230, 57, 70, 0.8); /* Muted red */
+
+  /* Borders & Dividers */
+  --lc-border: rgba(255,255,255,0.1);
+  --lc-divider: rgba(255,255,255,0.05);
+
+  /* Shadows */
+  --lc-shadow-sm: 0 2px 4px rgba(0,0,0,0.3);
+  --lc-shadow-md: 0 4px 8px rgba(0,0,0,0.4);
+  --lc-shadow-lg: 0 8px 16px rgba(0,0,0,0.5);
+
+  /* Spacing */
+  --lc-space-1: 0.25rem;
+  --lc-space-2: 0.5rem;
+  --lc-space-3: 1rem;
+  --lc-space-4: 1.5rem;
+  --lc-space-5: 2rem;
+  --lc-space-6: 3rem;
+  --lc-space-7: 4rem;
+  --lc-space-8: 6rem;
+
+  /* Border radius */
+  --lc-radius-sm: 4px;
+  --lc-radius-md: 8px;
+  --lc-radius-lg: 12px;
+  --lc-radius-full: 9999px;
+
+  /* Transitions */
+  --lc-transition-fast: 0.15s ease;
+  --lc-transition-normal: 0.3s ease;
+  --lc-transition-slow: 0.5s ease;
+
+  /* Typography */
+  --lc-font-heading: 'Playfair Display', serif;
+  --lc-font-body: 'Roboto', sans-serif;
+  --lc-font-size-xs: 0.75rem;   /* 12px */
+  --lc-font-size-sm: 0.875rem;  /* 14px */
+  --lc-font-size-base: 1rem;    /* 16px */
+  --lc-font-size-lg: 1.125rem;  /* 18px */
+  --lc-font-size-xl: 1.25rem;   /* 20px */
+  --lc-font-size-2xl: 1.5rem;   /* 24px */
+  --lc-font-size-3xl: 2rem;     /* 32px */
+  --lc-font-size-4xl: 2.5rem;   /* 40px */
+  --lc-font-size-5xl: 3rem;     /* 48px */
+  
+  /* Line heights */
+  --lc-line-height-tight: 1.2;
+  --lc-line-height-normal: 1.5;
+  --lc-line-height-loose: 1.8;
+
+  /* Z-index layers */
+  --lc-z-below: -1;
+  --lc-z-base: 1;
+  --lc-z-above: 10;
+  --lc-z-dropdown: 20;
+  --lc-z-sticky: 30;
+  --lc-z-fixed: 40;
+  --lc-z-overlay: 50;
+  --lc-z-modal: 60;
+  --lc-z-popover: 70;
+  --lc-z-tooltip: 80;
+}
+
+/* Light Theme Variables */
+[data-theme="light"] {
+  /* Backgrounds & Surfaces */
+  --lc-bg: #FAFAFA;           /* page background */
+  --lc-surface: #F2F2F2;      /* cards, nav, modals */
+  --lc-surface-alt: #E8E8E8;  /* secondary surface, hover states */
+
+  /* Text */
+  --lc-text-primary: #222222; /* dark gray for text */
+  --lc-text-secondary: #555555; /* muted gray */
+
+  /* Borders & Dividers */
+  --lc-border: rgba(0,0,0,0.1);
+  --lc-divider: rgba(0,0,0,0.05);
+
+  /* Shadows (lighter for light mode) */
+  --lc-shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+  --lc-shadow-md: 0 4px 8px rgba(0,0,0,0.1);
+  --lc-shadow-lg: 0 8px 16px rgba(0,0,0,0.15);
+}
+
+/* Legacy compatibility - map new variables to old ones */
+:root {
+  /* Map colors */
+  --color-bg: var(--lc-bg);
+  --color-surface: var(--lc-surface);
+  --color-text: var(--lc-text-primary);
+  --color-text-muted: var(--lc-text-secondary);
+  --color-primary: var(--lc-accent);
+  --color-primary-light: var(--lc-accent-hover);
+  --color-border: var(--lc-border);
+  
+  /* Dark mode variants */
+  --color-dark-bg: var(--lc-bg);
+  --color-dark-surface: var(--lc-surface);
+  --color-dark-text: var(--lc-text-primary);
+  --color-dark-text-muted: var(--lc-text-secondary);
+  --color-dark-border: var(--lc-border);
+  
+  /* Spacing */
+  --spacing-1: var(--lc-space-1);
+  --spacing-2: var(--lc-space-2);
+  --spacing-3: var(--lc-space-3);
+  --spacing-4: var(--lc-space-4);
+  --spacing-5: var(--lc-space-5);
+  --spacing-6: var(--lc-space-6);
+  --spacing-7: var(--lc-space-7);
+  --spacing-8: var(--lc-space-8);
+  
+  /* Border radius */
+  --border-radius-sm: var(--lc-radius-sm);
+  --border-radius-md: var(--lc-radius-md);
+  --border-radius-lg: var(--lc-radius-lg);
+  --border-radius-full: var(--lc-radius-full);
+  
+  /* Transitions */
+  --transition-fast: var(--lc-transition-fast);
+  --transition-normal: var(--lc-transition-normal);
+  
+  /* Font sizes */
+  --font-size-xs: var(--lc-font-size-xs);
+  --font-size-sm: var(--lc-font-size-sm);
+  --font-size-base: var(--lc-font-size-base);
+  --font-size-lg: var(--lc-font-size-lg);
+  --font-size-xl: var(--lc-font-size-xl);
+  --font-size-2xl: var(--lc-font-size-2xl);
+  --font-size-3xl: var(--lc-font-size-3xl);
+  --font-size-4xl: var(--lc-font-size-4xl);
+  --font-size-5xl: var(--lc-font-size-5xl);
+}

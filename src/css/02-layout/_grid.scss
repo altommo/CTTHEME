@@ -1,0 +1,273 @@
+/**
+ * Grid System & Layout Containers
+ * CustomTube Theme - Layout Layer (SCSS)
+ * 
+ * Flexible grid system and container utilities
+ */
+
+/* ==========================================
+   CONTAINER SYSTEM
+   ========================================== */
+
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--spacing-4);
+  padding-right: var(--spacing-4);
+
+  // Container variants
+  &-sm { max-width: var(--container-sm); }
+  &-md { max-width: var(--container-md); }
+  &-lg { max-width: var(--container-lg); }
+  &-xl { max-width: var(--container-xl); }
+  &-2xl { max-width: var(--container-2xl); }
+  &-fluid { max-width: none; }
+}
+
+/* ==========================================
+   SITE LAYOUT STRUCTURE
+   ========================================== */
+
+.site {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.site-content {
+  flex: 1;
+  margin-top: var(--header-nav-height);
+  margin-left: 0;
+  padding: var(--spacing-6) var(--spacing-4);
+  transition: margin-left var(--duration-300) var(--ease-in-out);
+
+  // Desktop layout with sidebar
+  @media (min-width: 1024px) {
+    margin-left: var(--sidebar-width);
+  }
+}
+
+// Content area variants
+.content-area {
+  max-width: var(--container-max);
+  margin: 0 auto;
+
+  &-fluid {
+    max-width: none;
+  }
+}
+
+/* ==========================================
+   CSS GRID SYSTEM
+   ========================================== */
+
+.grid {
+  display: grid;
+  gap: var(--spacing-4);
+}
+
+// Grid columns using @for loop for cleaner SCSS
+@for $i from 1 through 12 {
+  .grid-cols-#{$i} { 
+    grid-template-columns: repeat($i, minmax(0, 1fr)); 
+  }
+}
+
+// Auto-fit columns with map for cleaner code
+$autofit-sizes: (
+  xs: 200px,
+  sm: 250px,
+  md: 300px,
+  lg: 350px
+);
+
+@each $name, $size in $autofit-sizes {
+  .grid-auto-fit-#{$name} { 
+    grid-template-columns: repeat(auto-fit, minmax($size, 1fr)); 
+  }
+}
+
+// Grid gaps using @for loop
+$gap-values: (0, 1, 2, 3, 4, 5, 6, 8, 10, 12);
+
+@each $value in $gap-values {
+  .gap-#{$value} { 
+    gap: if($value == 0, 0, var(--spacing-#{$value})); 
+  }
+}
+
+// Grid item spanning
+@for $i from 1 through 6 {
+  .col-span-#{$i} { grid-column: span $i / span $i; }
+  .row-span-#{$i} { grid-row: span $i / span $i; }
+}
+
+.col-span-full { grid-column: 1 / -1; }
+.row-span-full { grid-row: 1 / -1; }
+
+/* ==========================================
+   VIDEO GRID SYSTEM
+   ========================================== */
+
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-auto-rows: 1fr;
+  gap: var(--spacing-4) var(--spacing-6);
+  width: 100%;
+
+  &-dense {
+    grid-auto-flow: dense;
+  }
+
+  // Video grid variants
+  &-sm {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: var(--spacing-4);
+  }
+
+  &-lg {
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: var(--spacing-8);
+  }
+}
+
+/* ==========================================
+   FLEXBOX UTILITIES
+   ========================================== */
+
+.flex { display: flex; }
+.inline-flex { display: inline-flex; }
+
+// Flex direction
+.flex-row { flex-direction: row; }
+.flex-row-reverse { flex-direction: row-reverse; }
+.flex-col { flex-direction: column; }
+.flex-col-reverse { flex-direction: column-reverse; }
+
+// Flex wrap
+.flex-wrap { flex-wrap: wrap; }
+.flex-wrap-reverse { flex-wrap: wrap-reverse; }
+.flex-nowrap { flex-wrap: nowrap; }
+
+// Flex grow/shrink
+.flex-1 { flex: 1 1 0%; }
+.flex-auto { flex: 1 1 auto; }
+.flex-initial { flex: 0 1 auto; }
+.flex-none { flex: none; }
+
+.flex-grow { flex-grow: 1; }
+.flex-grow-0 { flex-grow: 0; }
+.flex-shrink { flex-shrink: 1; }
+.flex-shrink-0 { flex-shrink: 0; }
+
+// Justify content utilities
+$justify-values: (
+  start: flex-start,
+  end: flex-end,
+  center: center,
+  between: space-between,
+  around: space-around,
+  evenly: space-evenly
+);
+
+@each $name, $value in $justify-values {
+  .justify-#{$name} { justify-content: $value; }
+}
+
+// Align items utilities
+$align-items-values: (
+  start: flex-start,
+  end: flex-end,
+  center: center,
+  baseline: baseline,
+  stretch: stretch
+);
+
+@each $name, $value in $align-items-values {
+  .items-#{$name} { align-items: $value; }
+}
+
+// Align content utilities
+$align-content-values: (
+  start: flex-start,
+  end: flex-end,
+  center: center,
+  between: space-between,
+  around: space-around,
+  evenly: space-evenly
+);
+
+@each $name, $value in $align-content-values {
+  .content-#{$name} { align-content: $value; }
+}
+
+// Align self utilities
+$align-self-values: (
+  auto: auto,
+  start: flex-start,
+  end: flex-end,
+  center: center,
+  stretch: stretch,
+  baseline: baseline
+);
+
+@each $name, $value in $align-self-values {
+  .self-#{$name} { align-self: $value; }
+}
+
+/* ==========================================
+   SPACING UTILITIES
+   ========================================== */
+
+// Generate margin and padding utilities
+$spacing-values: (0, 1, 2, 3, 4, 5, 6, 8, 10, 12);
+
+@each $value in $spacing-values {
+  $spacing: if($value == 0, 0, var(--spacing-#{$value}));
+  
+  // Margin utilities
+  .m-#{$value} { margin: $spacing; }
+  .mx-#{$value} { margin-left: $spacing; margin-right: $spacing; }
+  .my-#{$value} { margin-top: $spacing; margin-bottom: $spacing; }
+  .mt-#{$value} { margin-top: $spacing; }
+  .mr-#{$value} { margin-right: $spacing; }
+  .mb-#{$value} { margin-bottom: $spacing; }
+  .ml-#{$value} { margin-left: $spacing; }
+  
+  // Padding utilities
+  .p-#{$value} { padding: $spacing; }
+  .px-#{$value} { padding-left: $spacing; padding-right: $spacing; }
+  .py-#{$value} { padding-top: $spacing; padding-bottom: $spacing; }
+  .pt-#{$value} { padding-top: $spacing; }
+  .pr-#{$value} { padding-right: $spacing; }
+  .pb-#{$value} { padding-bottom: $spacing; }
+  .pl-#{$value} { padding-left: $spacing; }
+}
+
+.mx-auto { margin-left: auto; margin-right: auto; }
+.m-auto { margin: auto; }
+
+/* ==========================================
+   RESPONSIVE GRID
+   ========================================== */
+
+// Responsive grid utilities using map and @each
+$breakpoints: (
+  sm: 640px,
+  md: 768px,
+  lg: 1024px,
+  xl: 1280px
+);
+
+@each $prefix, $width in $breakpoints {
+  @media (min-width: $width) {
+    @for $i from 1 through 6 {
+      .#{$prefix}\:grid-cols-#{$i} { 
+        grid-template-columns: repeat($i, minmax(0, 1fr)); 
+      }
+    }
+  }
+}

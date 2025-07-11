@@ -1,0 +1,136 @@
+/**
+ * PH Navigation Critical Overrides
+ * CustomTube Theme - High Priority Navigation Styles
+ * 
+ * This file ensures the PH navigation displays correctly by providing
+ * critical CSS that takes precedence over conflicting styles.
+ */
+
+/* Force PH Navigation Structure - Critical */
+.ph-nav {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    height: var(--nav-height) !important;
+    background-color: var(--color-surface) !important;
+    border-bottom: 1px solid var(--color-border) !important;
+    z-index: var(--z-sticky) !important;
+    box-shadow: var(--shadow-base) !important;
+    display: block !important;
+}
+
+.ph-nav__inner {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    height: 100% !important;
+    max-width: var(--container-max) !important;
+    margin: 0 auto !important;
+    padding: 0 var(--spacing-4) !important;
+    gap: var(--spacing-4) !important;
+}
+
+/* Force horizontal display for navigation links */
+.ph-nav__links {
+    display: flex !important;
+    align-items: center !important;
+    gap: var(--spacing-6) !important;
+    list-style: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    flex: 1 !important;
+    justify-content: center !important;
+    flex-direction: row !important;
+}
+
+.ph-nav__links li {
+    margin: 0 !important;
+    position: relative !important;
+    display: inline-block !important;
+    flex-shrink: 0 !important;
+}
+
+.ph-nav__links a {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: var(--spacing-1) !important;
+    padding: var(--spacing-3) var(--spacing-4) !important;
+    color: var(--color-text) !important;
+    text-decoration: none !important;
+    font-weight: var(--font-weight-medium) !important;
+    font-size: var(--font-size-sm) !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    border-radius: var(--radius-base) !important;
+    transition: var(--transition-colors) !important;
+    white-space: nowrap !important;
+}
+
+.ph-nav__links a:hover {
+    color: var(--color-primary) !important;
+    text-decoration: underline !important;
+    text-decoration-color: var(--color-primary) !important;
+    text-underline-offset: 4px !important;
+}
+
+/* Force left section layout */
+.ph-nav__left {
+    display: flex !important;
+    align-items: center !important;
+    gap: var(--spacing-4) !important;
+    flex-shrink: 0 !important;
+}
+
+/* Force right section layout */
+.ph-nav__right {
+    display: flex !important;
+    align-items: center !important;
+    gap: var(--spacing-3) !important;
+    flex-shrink: 0 !important;
+}
+
+/* Ensure body padding */
+body.ph-nav-enabled {
+    padding-top: var(--nav-height) !important;
+}
+
+/* Mobile responsive overrides */
+@media (max-width: 767px) {
+    .ph-nav {
+        height: 50px !important;
+    }
+    
+    body.ph-nav-enabled {
+        padding-top: 50px !important;
+    }
+    
+    .ph-nav__links {
+        display: none !important;
+    }
+    
+    .ph-nav__burger {
+        display: flex !important;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+    .ph-nav__links {
+        display: none !important;
+    }
+    
+    .ph-nav__burger {
+        display: flex !important;
+    }
+}
+
+@media (min-width: 1024px) {
+    .ph-nav__burger {
+        display: none !important;
+    }
+    
+    .ph-nav__links {
+        display: flex !important;
+    }
+}

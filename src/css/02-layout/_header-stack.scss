@@ -1,0 +1,36 @@
+/**
+ * Header Stack Layout
+ * CustomTube Theme - Layout Layer
+ *
+ * Manages the fixed positioning and stacking of the utility bar, main header,
+ * and secondary navigation.
+ */
+
+.header-stack {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: var(--z-fixed); /* Ensure it's above all content */
+  box-shadow: var(--shadow-md); /* Apply shadow to the entire stack */
+  background-color: var(--color-black-alt); /* Consistent background for the stack */
+}
+
+/* Calculate total height of the header stack */
+:root {
+  --header-stack-height: calc(var(--utility-bar-height) + var(--header-height) + var(--secondary-nav-height));
+}
+
+/* Responsive adjustments for header stack height */
+@media (max-width: 1023px) {
+  :root {
+    --header-stack-height: calc(var(--utility-bar-height) + var(--header-height-mobile) + var(--secondary-nav-height-mobile));
+  }
+}
+
+@media (max-width: 767px) {
+  :root {
+    --header-stack-height: calc(var(--utility-bar-height-small-mobile) + var(--header-height-small-mobile) + var(--secondary-nav-height-small-mobile));
+  }
+}

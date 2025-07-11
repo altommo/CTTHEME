@@ -1,0 +1,188 @@
+<?php
+/**
+ * Template part for displaying video thumbnails with preview functionality
+ * Enhanced with features from TubeAcePlay
+ *
+ * @package CustomTube
+ */
+
+// Get video data
+$post_id = get_the_ID();
+$video_source_type = get_post_meta($post_id, 'video_source_type', true);
+$video_url = get_post_meta($post_id, 'video_url', true);
+$platform = get_post_meta($post_id, 'video_type', true);
+
+// If the platform is empty but we have a URL, detect it
+if (empty($platform) && !empty($video_url) && function_exists('customtube_detect_platform_from_url')) {
+    $platform = customtube_detect_platform_from_url($video_url);
+}
+
+// Get preview data
+$preview_video_url = get_post_meta($post_id, 'preview_video_url', true);
+$preview_image_url = get_post_meta($post_id, 'preview_image_url', true);
+
+// If we don't have preview data, try to extract it
+if (empty($preview_video_url) && empty($preview_image_url) && function_exists('customtube_extract_preview_urls') && !empty($video_url)) {
+    $preview_data = customtube_extract_preview_urls($video_url, $platform);
+    if (!empty($preview_data['videos'][0])) {
+        $preview_video_url = $preview_data['videos'][0];
+        update_post_meta($post_id, 'preview_video_url', $preview_video_url);
+    }
+    if (!empty($preview_data['images'][0])) {
+        $preview_image_url = $preview_data['images'][0];
+        update_post_meta($post_id, 'preview_image_url', $preview_image_url);
+    }
+}
+
+// Video duration
+$video_duration = get_post_meta($post_id, 'video_duration', true);
+if (empty($video_duration) && function_exists('customtube_get_formatted_duration')) {
+    $video_duration = customtube_get_formatted_duration($post_id);
+}
+
+// Get post thumbnail
+$has_thumbnail = has_post_thumbnail();
+$thumbnail_url = $has_thumbnail ? get_the_post_thumbnail_url($post_id, isset($size) ? $size : 'video-medium') : '';
+
+// If we have a preview image but no thumbnail, use the preview image as the thumbnail
+if (empty($thumbnail_url) && !empty($preview_image_url)) {
+    $thumbnail_url = $preview_image_url;
+    $has_thumbnail = true;
+}
+
+// If we still don't have a thumbnail, try to extract preview data again
+if (empty($thumbnail_url) && function_exists('customtube_extract_preview_urls') && !empty($video_url)) {
+    $preview_data = customtube_extract_preview_urls($video_url, $platform);
+    if (!empty($preview_data['images'][0])) {
+        $thumbnail_url = $preview_data['images'][0];
+        update_post_meta($post_id, 'preview_image_url', $thumbnail_url);
+        $has_thumbnail = true;
+    }
+}
+
+// Prepare data attributes for the thumbnail container
+$data_attrs = array(
+    'data-video-id' => $post_id,
+    'data-video-type' => $platform ?: 'unknown',
+);
+
+// Add preview-specific data attributes if available
+if (!empty($preview_video_url)) {
+    $data_attrs['data-preview-src'] = esc_attr($preview_video_url);
+}
+
+if (!empty($preview_image_url)) {
+    $data_attrs['data-webp-preview-src'] = esc_attr($preview_image_url);
+}
+
+// Build the HTML attributes string
+$data_attrs_html = '';
+foreach ($data_attrs as $key => $value) {
+    $data_attrs_html .= ' ' . $key . '="' . $value . '"';
+}
+
+// Container classes
+$container_class = 'video-thumbnail-container';
+if ($platform) {
+    $container_class .= ' platform-' . $platform;
+}
+
+// Additional metadata to display
+$view_count = function_exists('pvc_post_views') ? pvc_get_post_views($post_id) : 0;
+$tags = get_the_tags($post_id);
+$categories = get_the_category($post_id);
+$performers = get_the_terms($post_id, 'performer');
+?>
+
+<div class="video-card post-preview">
+    <div class="video-preview-styling">
+        <!-- Duration Badge -->
+        <?php if (!empty($video_duration)): ?>
+            <div class="duration"><?php echo esc_html($video_duration); ?></div>
+        <?php endif; ?>
+
+        <!-- Thumbnail with Preview Capability -->
+        <div class="<?php echo esc_attr($container_class); ?>"<?php echo $data_attrs_html; ?>>
+            <?php if ($has_thumbnail): ?>
+                <a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>">
+                    <img src="<?php echo esc_url($thumbnail_url); ?>" alt="<?php echo esc_attr(get_the_title()); ?>" class="thumbnail-static img-responsive">
+                </a>
+            <?php endif; ?>
+            
+            <!-- Play Icon Overlay -->
+            <div class="overlay-play-icon" aria-hidden="true"></div>
+        </div>
+
+        <!-- Video Title -->
+        <h3 class="preview-title">
+            <a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title_attribute(); ?>">
+                <?php the_title(); ?>
+            </a>
+        </h3>
+
+        <!-- Video Meta Information -->
+        <div class="preview-meta-info">
+            <div class="preview-date">
+                <a href="<?php the_permalink() ?>">
+                    <?php echo get_the_date(); ?>
+                </a>
+            </div>
+
+            <!-- Author Information -->
+            <div class="pull-left preview-author">
+                <?php if (function_exists('get_avatar')): ?>
+                    <a href="<?php echo esc_url(get_author_posts_url(get_the_author_meta('ID'))); ?>">
+                        <?php echo get_avatar(get_the_author_meta('ID'), 24); ?>
+                        <span class="author-name"><?php the_author(); ?></span>
+                    </a>
+                <?php endif; ?>
+            </div>
+
+            <!-- View Count -->
+            <div class="pull-right preview-views">
+                <?php if (function_exists('pvc_post_views')): ?>
+                    <span class="view-count"><?php echo number_format($view_count); ?> <i class="fa fa-eye" aria-hidden="true"></i></span>
+                <?php endif; ?>
+            </div>
+            
+            <div class="clearfix"></div>
+        </div>
+
+        <!-- Taxonomies Display -->
+        <?php if (!empty($performers)): ?>
+            <div class="post-preview-performers">
+                <?php 
+                $performer_links = array();
+                foreach ($performers as $performer) {
+                    $performer_links[] = '<a href="' . esc_url(get_term_link($performer)) . '">' . esc_html($performer->name) . '</a>';
+                }
+                echo 'Performers: ' . implode(', ', $performer_links);
+                ?>
+            </div>
+        <?php endif; ?>
+
+        <?php if (!empty($categories)): ?>
+            <div class="post-preview-category">
+                <?php 
+                $category_links = array();
+                foreach ($categories as $category) {
+                    $category_links[] = '<a href="' . esc_url(get_category_link($category)) . '">' . esc_html($category->name) . '</a>';
+                }
+                echo 'Categories: ' . implode(', ', $category_links);
+                ?>
+            </div>
+        <?php endif; ?>
+
+        <?php if (!empty($tags)): ?>
+            <div class="post-preview-tags">
+                <?php 
+                $tag_links = array();
+                foreach ($tags as $tag) {
+                    $tag_links[] = '<a href="' . esc_url(get_tag_link($tag)) . '">' . esc_html($tag->name) . '</a>';
+                }
+                echo 'Tags: ' . implode(', ', $tag_links);
+                ?>
+            </div>
+        <?php endif; ?>
+    </div>
+</div>

@@ -1,0 +1,97 @@
+<?php
+/**
+ * Template part: Enhanced Video Grid
+ *
+ * Displays a responsive grid of video thumbnails with hover-preview
+ * Based on the TubeAcePlay theme's grid system
+ * 
+ * @package CustomTube
+ */
+
+if (!defined('ABSPATH')) {
+    exit;
+}
+
+// Arguments: $videos (WP_Query or array of post objects)
+if (empty($videos)) {
+    echo '<p>' . esc_html__('No videos found.', 'customtube') . '</p>';
+    return;
+}
+
+// Define grid classes for responsive layout
+$grid_xs_class = 'col-xs-6';
+$grid_sm_class = 'col-sm-4';
+$grid_md_class = 'col-md-3';
+$grid_lg_class = 'col-lg-3';
+
+// Determine if we're using the masonry or flexbox layout
+$grid_layout = 'flexbox'; // Options: 'flexbox', 'masonry'
+?>
+
+<div class="video-grid-container">
+    <?php if ($grid_layout === 'flexbox'): ?>
+    <div class="video-grid video-flexbox row">
+    <?php else: ?>
+    <div class="video-grid video-masonry">
+    <?php endif; ?>
+
+        <?php foreach ($videos as $post): setup_postdata($post); ?>
+            <div class="<?php echo esc_attr("$grid_xs_class $grid_sm_class $grid_md_class $grid_lg_class"); ?> video-grid-item">
+                <?php include(get_template_directory() . '/template-parts/thumbnail-preview-enhanced.php'); ?>
+            </div>
+        <?php endforeach; wp_reset_postdata(); ?>
+        
+        <div class="clearfix"></div>
+    </div>
+    
+    <?php
+    // Add pagination if not specified otherwise
+    if (!isset($disable_pagination) || !$disable_pagination) {
+        echo '<div class="customtube-pagination">';
+        
+        // Check if we're using a custom query or the global query
+        if (isset($custom_query) && $custom_query) {
+            $GLOBALS['wp_query'] = $videos;
+        }
+        
+        // First try WP PageNavi if available
+        if (function_exists('wp_pagenavi')) {
+            wp_pagenavi();
+        } else {
+            // Otherwise use standard pagination
+            the_posts_pagination(array(
+                'mid_size' => 2,
+                'prev_text' => __('Previous', 'customtube'),
+                'next_text' => __('Next', 'customtube'),
+            ));
+        }
+        
+        // Restore global query if we modified it
+        if (isset($custom_query) && $custom_query) {
+            wp_reset_query();
+        }
+        
+        echo '</div>';
+    }
+    ?>
+</div>
+
+<?php if ($grid_layout === 'masonry'): ?>
+<script>
+    jQuery(document).ready(function($) {
+        // Initialize Masonry layout if jQuery is available
+        if (typeof $.fn.masonry !== 'undefined') {
+            $('.video-masonry').masonry({
+                itemSelector: '.video-grid-item',
+                columnWidth: '.video-grid-item',
+                percentPosition: true
+            });
+            
+            // Re-layout masonry when images load
+            $('.video-masonry').imagesLoaded().progress(function() {
+                $('.video-masonry').masonry('layout');
+            });
+        }
+    });
+</script>
+<?php endif; ?>

@@ -1,0 +1,494 @@
+/**
+ * Enhanced Card Components
+ * CustomTube Theme - Components Layer
+ * 
+ * Advanced card features: hover video previews, overlays, badges, and enhanced interactions
+ * These extend your existing card system with missing functionality
+ */
+
+/* ==========================================
+   VIDEO PREVIEW HOVER EFFECTS
+   ========================================== */
+
+.video-preview {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-video);
+  background-color: var(--color-surface-alt);
+}
+
+.video-preview .preview-poster {
+  width: 100%;
+  height: auto;
+  display: block;
+  aspect-ratio: var(--aspect-video);
+  object-fit: cover;
+  transition: opacity var(--duration-300) var(--ease-out);
+}
+
+.video-preview .preview-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity var(--duration-300) var(--ease-out);
+  pointer-events: none;
+}
+
+.video-preview:hover .preview-video {
+  opacity: 1;
+}
+
+.video-preview:hover .preview-poster {
+  opacity: 0;
+}
+
+/* ==========================================
+   CARD OVERLAY SYSTEM
+   ========================================== */
+
+.card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--card-overlay-bg);
+  opacity: 0;
+  transition: opacity var(--duration-300) var(--ease-out);
+  display: flex;
+  align-items: flex-end;
+  padding: var(--spacing-4);
+  z-index: var(--z-video-overlay);
+  border-radius: inherit;
+}
+
+.video-card:hover .card-overlay,
+.card:hover .card-overlay {
+  opacity: 1;
+}
+
+.card-overlay-content {
+  color: white;
+  width: 100%;
+}
+
+.card-overlay-title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--spacing-2);
+  line-height: var(--line-height-tight);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.card-overlay-meta {
+  font-size: var(--font-size-sm);
+  opacity: 0.9;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+}
+
+.card-overlay-duration,
+.card-overlay-views,
+.card-overlay-rating {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-1);
+}
+
+/* ==========================================
+   ENHANCED PLAY ICON
+   ========================================== */
+
+.card-play-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  width: 64px;
+  height: 64px;
+  background-color: var(--video-control-bg);
+  border: none;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  opacity: 0;
+  transition: opacity var(--duration-300) var(--ease-out),
+              transform var(--duration-300) var(--ease-out),
+              background-color var(--duration-200) var(--ease-out);
+  z-index: calc(var(--z-video-overlay) + 1);
+  cursor: pointer;
+}
+
+.card-play-icon::before {
+  content: '';
+  width: 0;
+  height: 0;
+  border-top: 12px solid transparent;
+  border-bottom: 12px solid transparent;
+  border-left: 20px solid white;
+  margin-left: 4px;
+}
+
+.video-card:hover .card-play-icon,
+.card:hover .card-play-icon {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.card-play-icon:hover {
+  background-color: var(--color-primary);
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+/* ==========================================
+   VIDEO BADGES
+   ========================================== */
+
+.card-badge {
+  position: absolute;
+  top: var(--spacing-3);
+  right: var(--spacing-3);
+  background-color: var(--color-primary);
+  color: white;
+  padding: var(--spacing-1) var(--spacing-3);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  z-index: calc(var(--z-video-overlay) + 1);
+  box-shadow: var(--shadow-sm);
+}
+
+.card-badge.badge-new {
+  background-color: var(--color-success);
+}
+
+.card-badge.badge-hot {
+  background-color: var(--color-warning);
+  color: var(--color-text);
+}
+
+.card-badge.badge-premium {
+  background: linear-gradient(135deg, var(--color-secondary), var(--color-primary));
+}
+
+.card-badge.badge-hd {
+  background-color: var(--color-info);
+}
+
+.card-badge.badge-4k {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+}
+
+/* Multiple badges */
+.card-badges {
+  position: absolute;
+  top: var(--spacing-3);
+  right: var(--spacing-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+  z-index: calc(var(--z-video-overlay) + 1);
+}
+
+.card-badges .card-badge {
+  position: static;
+}
+
+/* ==========================================
+   ENHANCED CARD INTERACTIONS
+   ========================================== */
+
+.card-enhanced {
+  position: relative;
+  overflow: hidden;
+  transition: transform var(--duration-200) var(--ease-out),
+              box-shadow var(--duration-200) var(--ease-out),
+              border-color var(--duration-200) var(--ease-out);
+}
+
+.card-enhanced:hover {
+  transform: var(--card-hover-transform);
+  box-shadow: var(--card-hover-shadow);
+  border-color: var(--color-primary);
+}
+
+.card-enhanced::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0);
+  transition: background var(--duration-200) var(--ease-out);
+  z-index: 1;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.card-enhanced:hover::after {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+/* ==========================================
+   CARD LOADING PLACEHOLDER
+   ========================================== */
+
+.video-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  min-height: 200px;
+  background: linear-gradient(135deg, var(--color-surface) 0%, var(--color-surface-alt) 100%);
+  color: var(--color-text-muted);
+  text-align: center;
+  padding: var(--spacing-6);
+  border-radius: var(--radius-video);
+}
+
+.placeholder-icon {
+  width: 48px;
+  height: 48px;
+  color: var(--color-text-muted);
+  margin-bottom: var(--spacing-4);
+  opacity: 0.6;
+}
+
+.placeholder-title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-medium);
+  margin-bottom: var(--spacing-2);
+  color: var(--color-text);
+}
+
+.placeholder-text {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  max-width: 200px;
+  line-height: var(--line-height-relaxed);
+}
+
+/* ==========================================
+   CARD QUICK ACTIONS
+   ========================================== */
+
+.card-quick-actions {
+  position: absolute;
+  top: var(--spacing-3);
+  left: var(--spacing-3);
+  display: flex;
+  gap: var(--spacing-2);
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity var(--duration-200) var(--ease-out),
+              transform var(--duration-200) var(--ease-out);
+  z-index: calc(var(--z-video-overlay) + 1);
+}
+
+.video-card:hover .card-quick-actions,
+.card:hover .card-quick-actions {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.quick-action-btn {
+  width: 32px;
+  height: 32px;
+  background-color: var(--video-control-bg);
+  border: none;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  cursor: pointer;
+  transition: background-color var(--duration-200) var(--ease-out),
+              transform var(--duration-200) var(--ease-out);
+}
+
+.quick-action-btn:hover {
+  background-color: var(--color-primary);
+  transform: scale(1.1);
+}
+
+.quick-action-btn svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+/* Like button */
+.quick-action-btn.is-liked {
+  background-color: var(--color-error);
+}
+
+.quick-action-btn.is-liked svg {
+  fill: white;
+}
+
+/* Bookmark button */
+.quick-action-btn.is-bookmarked {
+  background-color: var(--color-warning);
+}
+
+/* ==========================================
+   CARD PROGRESS BAR
+   ========================================== */
+
+.card-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background-color: rgba(255, 255, 255, 0.3);
+  z-index: calc(var(--z-video-overlay) + 1);
+}
+
+.card-progress-fill {
+  height: 100%;
+  background-color: var(--color-primary);
+  width: 0%;
+  transition: width var(--duration-200) var(--ease-out);
+}
+
+/* ==========================================
+   RESPONSIVE ENHANCEMENTS
+   ========================================== */
+
+@media (max-width: 768px) {
+  .card-play-icon {
+    width: 48px;
+    height: 48px;
+  }
+  
+  .card-play-icon::before {
+    border-top-width: 8px;
+    border-bottom-width: 8px;
+    border-left-width: 14px;
+  }
+  
+  .card-overlay {
+    padding: var(--spacing-3);
+  }
+  
+  .card-overlay-title {
+    font-size: var(--font-size-base);
+  }
+  
+  .card-badges {
+    top: var(--spacing-2);
+    right: var(--spacing-2);
+  }
+  
+  .card-quick-actions {
+    top: var(--spacing-2);
+    left: var(--spacing-2);
+  }
+  
+  .quick-action-btn {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .quick-action-btn svg {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .card-enhanced:hover {
+    transform: none; /* Disable hover transforms on small screens */
+  }
+  
+  .video-preview:hover .preview-video {
+    opacity: 0; /* Disable video preview on mobile */
+  }
+  
+  .video-preview:hover .preview-poster {
+    opacity: 1;
+  }
+  
+  .card-overlay {
+    opacity: 0 !important; /* Hide overlays on mobile */
+  }
+  
+  .card-play-icon {
+    opacity: 1 !important; /* Always show play button on mobile */
+    transform: translate(-50%, -50%) !important;
+  }
+}
+
+/* ==========================================
+   ACCESSIBILITY ENHANCEMENTS
+   ========================================== */
+
+.card-play-icon:focus,
+.quick-action-btn:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .card-overlay {
+    background: rgba(0, 0, 0, 0.9);
+  }
+  
+  .card-play-icon,
+  .quick-action-btn {
+    border: 2px solid white;
+  }
+  
+  .card-badge {
+    border: 1px solid white;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .card-enhanced,
+  .card-play-icon,
+  .card-overlay,
+  .card-quick-actions,
+  .quick-action-btn,
+  .video-preview .preview-video,
+  .video-preview .preview-poster {
+    transition: none;
+  }
+  
+  .card-enhanced:hover {
+    transform: none;
+  }
+  
+  .card-play-icon:hover,
+  .quick-action-btn:hover {
+    transform: translate(-50%, -50%);
+  }
+}
+
+/* ==========================================
+   PRINT STYLES
+   ========================================== */
+
+@media print {
+  .card-overlay,
+  .card-play-icon,
+  .card-quick-actions,
+  .card-badge {
+    display: none;
+  }
+}

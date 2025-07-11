@@ -1,0 +1,253 @@
+/**
+ * Age Verification Component
+ * CustomTube Theme - Components Layer
+ * 
+ * Modal dialog for age verification on adult content sites
+ * Critical component that must load properly for legal compliance
+ */
+
+/* ==========================================
+   AGE VERIFICATION OVERLAY
+   ========================================== */
+
+.age-verification-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    z-index: 999999; /* Must be above ads (1070) and everything else */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-4, 20px);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+/* ==========================================
+   AGE VERIFICATION MODAL
+   ========================================== */
+
+.age-verification-modal {
+    background-color: var(--color-surface, #ffffff);
+    color: var(--color-text, #333333);
+    border-radius: var(--radius-lg, 8px);
+    padding: var(--spacing-6, 30px);
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+    box-shadow: var(--shadow-xl, 0 10px 25px rgba(0, 0, 0, 0.5));
+}
+
+.dark-mode .age-verification-modal {
+    background-color: var(--color-dark-surface, #2d2d2d);
+    color: var(--color-dark-text, #ffffff);
+}
+
+/* ==========================================
+   AGE VERIFICATION LOGO
+   ========================================== */
+
+.age-verification-logo {
+    margin-bottom: var(--spacing-4, 20px);
+}
+
+.age-verification-logo img,
+.age-verification-logo .custom-logo {
+    max-height: 60px;
+    width: auto;
+}
+
+.age-verification-site-title {
+    font-size: var(--font-size-2xl, 24px);
+    margin: 0;
+    color: var(--color-primary, #ff4057);
+    font-weight: var(--font-weight-bold, 700);
+}
+
+/* ==========================================
+   AGE VERIFICATION CONTENT
+   ========================================== */
+
+.age-verification-modal h2 {
+    font-size: var(--font-size-2xl, 24px);
+    margin-top: 0;
+    margin-bottom: var(--spacing-3, 15px);
+    color: var(--color-primary, #ff4057);
+    font-weight: var(--font-weight-semibold, 600);
+}
+
+.dark-mode .age-verification-modal h2 {
+    color: var(--color-primary, #ff6b7d);
+}
+
+.age-verification-text {
+    margin-bottom: var(--spacing-5, 25px);
+    font-size: var(--font-size-base, 16px);
+    line-height: var(--line-height-relaxed, 1.5);
+    color: var(--color-text, #333333);
+}
+
+.dark-mode .age-verification-text {
+    color: var(--color-dark-text, #ffffff);
+}
+
+/* ==========================================
+   AGE VERIFICATION BUTTONS
+   ========================================== */
+
+.age-verification-buttons {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-3, 15px);
+    margin-bottom: var(--spacing-4, 20px);
+}
+
+.age-confirm-button,
+.age-cancel-button {
+    padding: var(--spacing-3, 12px) var(--spacing-5, 25px);
+    border: none;
+    border-radius: var(--radius-base, 4px);
+    font-size: var(--font-size-base, 16px);
+    font-weight: var(--font-weight-medium, 500);
+    cursor: pointer;
+    transition: var(--transition-colors), transform var(--duration-150) var(--ease-out);
+}
+
+.age-confirm-button {
+    background-color: var(--color-primary, #ff4057);
+    color: #ffffff;
+}
+
+.age-confirm-button:hover {
+    background-color: var(--color-primary-dark, #e0364a);
+    transform: translateY(-2px);
+}
+
+.age-cancel-button {
+    background-color: var(--color-surface-variant, #f5f5f5);
+    color: var(--color-text, #333333);
+}
+
+.dark-mode .age-cancel-button {
+    background-color: var(--color-dark-surface-variant, #3d3d3d);
+    color: var(--color-dark-text, #ffffff);
+}
+
+.age-cancel-button:hover {
+    background-color: var(--color-border, #e0e0e0);
+    transform: translateY(-2px);
+}
+
+.dark-mode .age-cancel-button:hover {
+    background-color: var(--color-dark-border, #4d4d4d);
+}
+
+/* ==========================================
+   AGE VERIFICATION LINKS
+   ========================================== */
+
+.age-verification-links {
+    font-size: var(--font-size-sm, 14px);
+}
+
+.age-verification-links a {
+    color: var(--color-text-muted, #666666);
+    text-decoration: none;
+    margin: 0 var(--spacing-2, 10px);
+    transition: var(--transition-colors);
+}
+
+.dark-mode .age-verification-links a {
+    color: var(--color-dark-text-muted, #bbbbbb);
+}
+
+.age-verification-links a:hover {
+    text-decoration: underline;
+    color: var(--color-primary, #ff4057);
+}
+
+/* ==========================================
+   RESPONSIVE DESIGN
+   ========================================== */
+
+@media screen and (max-width: 480px) {
+    .age-verification-modal {
+        padding: var(--spacing-4, 20px);
+        margin: var(--spacing-2, 10px);
+    }
+    
+    .age-verification-buttons {
+        flex-direction: column;
+        gap: var(--spacing-2, 10px);
+    }
+    
+    .age-confirm-button,
+    .age-cancel-button {
+        width: 100%;
+        padding: var(--spacing-3, 12px) var(--spacing-4, 20px);
+    }
+    
+    .age-verification-modal h2 {
+        font-size: var(--font-size-xl, 20px);
+    }
+    
+    .age-verification-text {
+        font-size: var(--font-size-sm, 14px);
+    }
+}
+
+/* ==========================================
+   ACCESSIBILITY ENHANCEMENTS
+   ========================================== */
+
+.age-verification-overlay:focus {
+    outline: none;
+}
+
+.age-confirm-button:focus,
+.age-cancel-button:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .age-verification-modal {
+        border: 2px solid var(--color-border);
+    }
+    
+    .age-verification-overlay {
+        background-color: rgba(0, 0, 0, 0.95);
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    .age-confirm-button,
+    .age-cancel-button {
+        transition: none;
+    }
+    
+    .age-confirm-button:hover,
+    .age-cancel-button:hover {
+        transform: none;
+    }
+    
+    .age-verification-overlay {
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+    }
+}
+
+/* ==========================================
+   PRINT STYLES
+   ========================================== */
+
+@media print {
+    .age-verification-overlay {
+        display: none !important;
+    }
+}

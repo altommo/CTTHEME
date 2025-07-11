@@ -1,0 +1,191 @@
+/* ==========================================================================
+   MAIN CSS - CUSTOMTUBE MODULAR ARCHITECTURE
+   ========================================================================== */
+
+/* Import all CSS files in the correct cascade order for optimal performance
+   and maintainability. This follows the ITCSS (Inverted Triangle CSS) methodology. */
+
+/* ==========================================================================
+   01 - FOUNDATIONS
+   Base styles, variables, and fundamental building blocks
+   ========================================================================== */
+
+/* CSS Custom Properties - Define all design tokens */
+@import url('01-foundations/variables.css');
+
+/* CSS Reset and Normalize - Remove browser inconsistencies */
+@import url('01-foundations/reset.css');
+
+/* Typography - Font definitions and text styles */
+@import url('01-foundations/typography.css');
+
+/* ==========================================================================
+   02 - LAYOUT
+   Structural components and page layout systems
+   ========================================================================== */
+
+/* Grid System - Layout containers and grid utilities */
+@import url('02-layout/grid.css');
+
+/* Site Header - Branding and top navigation */
+@import url('02-layout/header.css');
+
+/* Main Navigation - Primary navigation menu */
+@import url('02-layout/navigation.css');
+
+/* Main Layout - Site structure and two-column layout */
+@import url('02-layout/main-layout.css');
+
+/* Sidebar - Filter sidebar and secondary content */
+@import url('02-layout/sidebar.css');
+
+/* ==========================================================================
+   03 - COMPONENTS
+   Reusable UI components and interface elements
+   ========================================================================== */
+
+/* Button Components - All button styles and variations */
+@import url('03-components/buttons.css');
+
+/* Form Components - Form elements, inputs, and validation */
+@import url('03-components/forms.css');
+
+/* Card Components - Video cards, thumbnails, and content cards */
+@import url('03-components/cards.css');
+
+/* Ad Components - Ad zones and ad container styling */
+@import url('03-components/ads.css');
+
+/* Modal Components - Overlays, popups, and modal dialogs */
+@import url('03-components/modals.css');
+
+/* Age Verification Component - Adult content access control */
+@import url('03-components/age-verification.css');
+
+/* ==========================================================================
+   04 - PAGES
+   Page-specific styles and overrides
+   ========================================================================== */
+
+/* Homepage - Landing page and featured content */
+@import url('04-pages/home.css');
+
+/* Video Pages - Individual video display and player */
+@import url('04-pages/video.css');
+
+/* Authentication - Login, register, and auth flows */
+@import url('04-pages/auth.css');
+
+/* Performers - Performer directory and profiles */
+@import url('04-pages/performers.css');
+
+/* Categories - Category browsing and filtering */
+@import url('04-pages/categories.css');
+
+/* Terms of Service - Legal terms and conditions */
+@import url('04-pages/terms-of-service.css');
+
+/* Privacy Policy - Privacy and data protection */
+@import url('04-pages/privacy-policy.css');
+
+/* DMCA Policy - Copyright and takedown procedures */
+@import url('04-pages/dmca.css');
+
+/* 2257 Compliance - Age verification and record keeping */
+@import url('04-pages/2257-compliance.css');
+
+/* Trending Videos - Hot and trending content */
+@import url('04-pages/trending.css');
+
+/* Liked Videos - User favorites and liked content */
+@import url('04-pages/likedvideos.css');
+
+
+/* ==========================================================================
+   05 - UTILITIES
+   Helper classes, responsive utilities, and animations
+   ========================================================================== */
+
+/* Responsive Design - Media queries and breakpoint utilities */
+@import url('05-utilities/responsive.css');
+
+/* Animations - Transitions, transforms, and motion */
+@import url('05-utilities/animations.css');
+
+/* Utility Classes - Helper classes and atomic utilities */
+@import url('05-utilities/utilities.css');
+
+/* ==========================================================================
+   ARCHITECTURE NOTES
+   ========================================================================== */
+
+/*
+LOADING ORDER RATIONALE:
+
+1. FOUNDATIONS FIRST
+   - Variables must load first to be available to all other files
+   - Reset normalizes browser defaults before applying custom styles
+   - Typography establishes base text styles
+
+2. LAYOUT SECOND
+   - Grid system provides structural foundation
+   - Header, navigation, and sidebar create page architecture
+   - These affect document flow and positioning
+
+3. COMPONENTS THIRD
+   - Reusable components built on foundation and layout
+   - Can safely use variables and layout systems
+   - Independent and modular by design
+
+4. PAGES FOURTH  
+   - Page-specific styles that may override components
+   - Built on top of all previous layers
+   - Contextual modifications and enhancements
+
+5. UTILITIES LAST
+   - Responsive utilities can override everything when needed
+   - Animations enhance existing styles
+   - Utility classes provide final layer of control
+   - Highest specificity for developer control
+
+BENEFITS:
+- Clear separation of concerns
+- Predictable cascade and specificity
+- Easy maintenance and debugging
+- Modular and scalable architecture
+- Performance optimized loading
+- Prevents CSS conflicts and specificity wars
+*/
+
+/* ==========================================================================
+   PERFORMANCE NOTES
+   ========================================================================== */
+
+/*
+CSS OPTIMIZATION STRATEGIES USED:
+
+1. Modular Architecture
+   - Split into logical, focused files
+   - Easier to maintain and debug
+   - Better caching strategies
+
+2. CSS Custom Properties
+   - Centralized design system
+   - Runtime theme switching capability
+   - Reduced file size through reuse
+
+3. Efficient Selectors
+   - Avoid deep nesting
+   - Use classes over complex selectors
+   - Minimize universal selectors
+
+4. Strategic Imports
+   - Load order optimized for cascade
+   - Critical styles loaded first
+   - Non-critical animations loaded last
+
+5. Responsive Design
+   - Mobile-first approach
+   - Efficient media queries
+   - Progressive enhancement
+*/

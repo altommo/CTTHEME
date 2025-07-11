@@ -1,0 +1,63 @@
+<?php
+/**
+ * CustomTube JavaScript Debug Test
+ * Place this file in your theme root and access it via browser
+ */
+
+// Get the theme directory path
+$theme_dir = get_template_directory();
+$theme_uri = get_template_directory_uri();
+
+// JavaScript file paths
+$js_file_path = $theme_dir . '/dist/js/customtube.min.js';
+$js_file_url = $theme_uri . '/dist/js/customtube.min.js';
+
+echo '<h1>CustomTube JavaScript Diagnostic</h1>';
+
+echo '<h2>File System Check</h2>';
+echo '<strong>Theme Directory:</strong> ' . $theme_dir . '<br>';
+echo '<strong>JavaScript File Path:</strong> ' . $js_file_path . '<br>';
+echo '<strong>File Exists:</strong> ' . (file_exists($js_file_path) ? '✅ YES' : '❌ NO') . '<br>';
+
+if (file_exists($js_file_path)) {
+    echo '<strong>File Size:</strong> ' . number_format(filesize($js_file_path)) . ' bytes<br>';
+    echo '<strong>Last Modified:</strong> ' . date('Y-m-d H:i:s', filemtime($js_file_path)) . '<br>';
+    echo '<strong>File Permissions:</strong> ' . substr(sprintf('%o', fileperms($js_file_path)), -4) . '<br>';
+}
+
+echo '<h2>URL Check</h2>';
+echo '<strong>JavaScript File URL:</strong> <a href="' . $js_file_url . '" target="_blank">' . $js_file_url . '</a><br>';
+
+echo '<h2>WordPress Functions</h2>';
+echo '<strong>get_template_directory():</strong> ' . get_template_directory() . '<br>';
+echo '<strong>get_template_directory_uri():</strong> ' . get_template_directory_uri() . '<br>';
+
+echo '<h2>Test Direct Access</h2>';
+echo '<p>Click the link above to test if the JavaScript file loads directly in your browser.</p>';
+
+echo '<h2>WordPress Enqueue Test</h2>';
+if (function_exists('wp_enqueue_script')) {
+    echo '✅ wp_enqueue_script function exists<br>';
+} else {
+    echo '❌ wp_enqueue_script function missing<br>';
+}
+
+echo '<h2>jQuery Test</h2>';
+echo '<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>';
+echo '<script>
+jQuery(document).ready(function($) {
+    console.log("✅ jQuery is loaded");
+    
+    // Test if our JS file loads
+    $.get("' . $js_file_url . '")
+        .done(function(data) {
+            console.log("✅ CustomTube JS file accessible via AJAX");
+        })
+        .fail(function(xhr) {
+            console.error("❌ CustomTube JS file failed to load via AJAX:", xhr.status, xhr.statusText);
+        });
+});
+</script>';
+
+echo '<p>Check your browser console for additional test results.</p>';
+?>
