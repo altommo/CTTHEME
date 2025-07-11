@@ -218,7 +218,7 @@ Types: feat, fix, docs, style, refactor, test, chore
 ## Resources & Documentation
 
 ### Design Resources
-- [Figma Design System](link-to-figma) - UI components and patterns
+- [Design System Overview](docs/DESIGN_SYSTEM.md) - UI components and patterns
 - [Style Guide](docs/STYLE_GUIDE.md) - Visual identity guidelines
 - [Component Library](docs/COMPONENTS.md) - Reusable UI components
 
