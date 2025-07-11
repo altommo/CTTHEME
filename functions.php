@@ -860,7 +860,9 @@ add_action('wp_ajax_nopriv_custom_user_register', 'customtube_custom_user_regist
 function customtube_track_user_behavior() {
     // Verify nonce
     if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'customtube-ajax-nonce')) {
-        error_log('Track User Behavior AJAX Error: Invalid nonce. Nonce received: ' . ($_POST['nonce'] ?? 'N/A'));
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log('Track User Behavior AJAX Error: Invalid nonce. Nonce received: ' . ($_POST['nonce'] ?? 'N/A'));
+        }
         wp_send_json_error('Invalid nonce');
     }
 
@@ -870,22 +872,30 @@ function customtube_track_user_behavior() {
 
     // Validate inputs
     if ($video_id <= 0) {
-        error_log('Track User Behavior AJAX Error: Invalid video ID: ' . $video_id);
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log('Track User Behavior AJAX Error: Invalid video ID: ' . $video_id);
+        }
         wp_send_json_error('Invalid video ID.');
     }
     if (empty($event_type)) {
-        error_log('Track User Behavior AJAX Error: Empty event type.');
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log('Track User Behavior AJAX Error: Empty event type.');
+        }
         wp_send_json_error('Empty event type.');
     }
     // Optionally, validate event_type against a whitelist
     $allowed_event_types = ['click', 'view', 'watch_complete', 'like', 'share'];
     if (!in_array($event_type, $allowed_event_types)) {
-        error_log('Track User Behavior AJAX Error: Disallowed event type: ' . $event_type);
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log('Track User Behavior AJAX Error: Disallowed event type: ' . $event_type);
+        }
         wp_send_json_error('Disallowed event type.');
     }
 
     // Log the behavior (for demonstration purposes)
-    error_log("User ID: {$user_id}, Video ID: {$video_id}, Event Type: {$event_type}");
+    if (defined('WP_DEBUG') && WP_DEBUG) {
+        error_log("User ID: {$user_id}, Video ID: {$video_id}, Event Type: {$event_type}");
+    }
 
     // In a real application, you would store this data in a custom table
     // or send it to a dedicated analytics/recommendation service.
@@ -984,7 +994,9 @@ function customtube_register_pages() {
             ));
 
             if (!$page_id || is_wp_error($page_id)) {
-                error_log("Failed to create page: {$title}");
+                if (defined('WP_DEBUG') && WP_DEBUG) {
+                    error_log("Failed to create page: {$title}");
+                }
             }
         }
     }

@@ -822,20 +822,23 @@ add_action('wp_loaded', 'customtube_add_cache_admin_tools');
  * @param mixed $data Additional data to log
  */
 function customtube_log_debug($message, $data = null) {
-    // Only log if debug mode is enabled
+    // Respect global debug setting
+    if (!defined('WP_DEBUG') || !WP_DEBUG) {
+        return;
+    }
+
+    // Only log if ad debug mode is enabled
     if (!defined('CUSTOMTUBE_DEBUG_ADS') || !CUSTOMTUBE_DEBUG_ADS) {
         return;
     }
-    
+
     $log_message = '[CustomTube Ads] ' . $message;
-    
+
     if ($data !== null) {
         $log_message .= ' Data: ' . print_r($data, true);
     }
-    
-    if (defined('WP_DEBUG') && WP_DEBUG) {
-        error_log($log_message);
-    }
+
+    error_log($log_message);
 }
 
 /**
