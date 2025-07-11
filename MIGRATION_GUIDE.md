@@ -96,7 +96,7 @@ wp_localize_script('customtube-admin', 'customtubeAdminData', array(
 
 ### **1. Build the JavaScript**
 ```bash
-cd C:\Users\hp\Documents\plugins\customtube-no-plugin
+cd /path/to/customtube-theme
 npm install
 npm run build
 ```
@@ -129,13 +129,13 @@ define('WP_DEBUG_LOG', true);
 ### **If build fails:**
 1. **Install dependencies**: `npm install`
 2. **Check Node version**: Requires Node.js 14+
-3. **Windows path issues**: Try running from Command Prompt as Administrator
+3. **Permission issues**: Try running your terminal with elevated privileges
 
 ### **Cache Issues:**
 The new system automatically handles cache busting using file modification times, but you may need to:
 1. Clear browser cache
 2. Clear WordPress caching plugins
-3. Hard refresh (Ctrl+F5) your site
+3. Hard refresh (Ctrl+F5 or Cmd+Shift+R) your site
 
 ## 🎉 **Success Indicators**
 
