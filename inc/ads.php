@@ -390,7 +390,7 @@ function customtube_get_user_ip() {
  */
 function customtube_geoip_lookup($ip) {
     // Use a free geo-IP service (consider ip-api.com, ipinfo.io, etc.)
-    $api_url = "http://ip-api.com/json/{$ip}?fields=countryCode";
+    $api_url = "https://ip-api.com/json/{$ip}?fields=countryCode";
     
     $response = wp_remote_get($api_url, array(
         'timeout' => 3,

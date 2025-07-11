@@ -15,6 +15,8 @@ This is a modified version of the CustomTube theme with the import functionality
 3. **Modified Files**:
    - `functions.php` - Updated to remove import functionality
    - Various admin files - Removed import-related code
+4. **Geo-IP Service**: The ad system now queries `https://ip-api.com` for
+   country lookups over HTTPS.
 
 ## Installation
 
