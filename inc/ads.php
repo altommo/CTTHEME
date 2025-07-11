@@ -14,7 +14,9 @@ function customtube_ads_test_function() {
 }
 
 // Log that we're starting to load
-error_log('CustomTube: Starting to load optimized ads.php');
+if (defined('WP_DEBUG') && WP_DEBUG) {
+    error_log('CustomTube: Starting to load optimized ads.php');
+}
 
 /**
  * Get cached ads for a specific zone with intelligent caching
@@ -831,7 +833,9 @@ function customtube_log_debug($message, $data = null) {
         $log_message .= ' Data: ' . print_r($data, true);
     }
     
-    error_log($log_message);
+    if (defined('WP_DEBUG') && WP_DEBUG) {
+        error_log($log_message);
+    }
 }
 
 /**
@@ -885,7 +889,9 @@ add_action('init', function() {
     // Force reset for testing
     delete_option('customtube_test_ads_created');
     
-    error_log('CustomTube: Checking for existing ads...');
+    if (defined('WP_DEBUG') && WP_DEBUG) {
+        error_log('CustomTube: Checking for existing ads...');
+    }
     
     // Check if we have any ads
     $existing_ads = get_posts(array(
@@ -894,10 +900,14 @@ add_action('init', function() {
         'post_status' => 'publish'
     ));
     
-    error_log('CustomTube: Found ' . count($existing_ads) . ' existing ads');
+    if (defined('WP_DEBUG') && WP_DEBUG) {
+        error_log('CustomTube: Found ' . count($existing_ads) . ' existing ads');
+    }
     
     if (empty($existing_ads)) {
-        error_log('CustomTube: Creating test ads...');
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log('CustomTube: Creating test ads...');
+        }
         
         // Create test ads
         $test_ads = array(
@@ -925,7 +935,9 @@ add_action('init', function() {
         );
         
         foreach ($test_ads as $ad_data) {
-            error_log('CustomTube: Creating ad: ' . $ad_data['title']);
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log('CustomTube: Creating ad: ' . $ad_data['title']);
+            }
             
             // Create the post
             $post_id = wp_insert_post(array(
@@ -936,7 +948,9 @@ add_action('init', function() {
             ));
             
             if ($post_id && !is_wp_error($post_id)) {
-                error_log('CustomTube: Created post ID: ' . $post_id);
+                if (defined('WP_DEBUG') && WP_DEBUG) {
+                    error_log('CustomTube: Created post ID: ' . $post_id);
+                }
                 
                 // Add meta data
                 update_post_meta($post_id, '_ad_status', 'active');
@@ -948,26 +962,38 @@ add_action('init', function() {
                 
                 // Assign to zone (if taxonomy exists)
                 if (taxonomy_exists('ad_zone')) {
-                    error_log('CustomTube: ad_zone taxonomy exists');
+                    if (defined('WP_DEBUG') && WP_DEBUG) {
+                        error_log('CustomTube: ad_zone taxonomy exists');
+                    }
                     
                     // Create the term if it doesn't exist
                     $term = term_exists($ad_data['zone'], 'ad_zone');
                     if (!$term) {
                         $term = wp_insert_term($ad_data['zone'], 'ad_zone');
-                        error_log('CustomTube: Created term: ' . $ad_data['zone']);
+                        if (defined('WP_DEBUG') && WP_DEBUG) {
+                            error_log('CustomTube: Created term: ' . $ad_data['zone']);
+                        }
                     }
                     
                     if (!is_wp_error($term)) {
                         $result = wp_set_object_terms($post_id, $ad_data['zone'], 'ad_zone');
-                        error_log('CustomTube: Assigned term result: ' . print_r($result, true));
+                        if (defined('WP_DEBUG') && WP_DEBUG) {
+                            error_log('CustomTube: Assigned term result: ' . print_r($result, true));
+                        }
                     }
                 } else {
-                    error_log('CustomTube: ad_zone taxonomy does NOT exist');
+                    if (defined('WP_DEBUG') && WP_DEBUG) {
+                        error_log('CustomTube: ad_zone taxonomy does NOT exist');
+                    }
                 }
                 
-                error_log("CustomTube: Successfully created test ad: {$ad_data['title']} (ID: $post_id)");
+                if (defined('WP_DEBUG') && WP_DEBUG) {
+                    error_log("CustomTube: Successfully created test ad: {$ad_data['title']} (ID: $post_id)");
+                }
             } else {
-                error_log('CustomTube: Failed to create post: ' . print_r($post_id, true));
+                if (defined('WP_DEBUG') && WP_DEBUG) {
+                    error_log('CustomTube: Failed to create post: ' . print_r($post_id, true));
+                }
             }
         }
         
@@ -979,7 +1005,9 @@ add_action('init', function() {
             customtube_clear_all_ad_zones_cache();
         }
         
-        error_log("CustomTube: Test ads creation process completed");
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log("CustomTube: Test ads creation process completed");
+        }
     }
 });
 
