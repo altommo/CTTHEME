@@ -10,45 +10,10 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * IMPORTANT FIX FOR FUNCTION REDECLARATION
- * Wrapper functions to avoid duplicate function errors
+ * Helper functions used across CustomTube templates.
+ * All customtube_get_* functions live here for consistency.
  */
 
-/**
- * The video query helpers were consolidated into functions.php.
- * Keeping wrappers here to avoid redeclaration issues if this file
- * is loaded before the main theme functions.
- */
-
-/**
- * Get videos by category
- * 
- * @param int|string $category Category ID or slug
- * @param int $count Number of videos to retrieve
- * @return WP_Query
- */
-if (!function_exists('customtube_get_videos_by_category')) {
-function customtube_get_videos_by_category($category, $count = 8) {
-    $field = is_numeric($category) ? 'term_id' : 'slug';
-    
-    $args = array(
-        'post_type'      => 'video',
-        'posts_per_page' => $count,
-        'orderby'        => 'date',
-        'order'          => 'DESC',
-        'post_status'    => 'publish',
-        'tax_query'      => array(
-            array(
-                'taxonomy' => 'genre',
-                'field'    => $field,
-                'terms'    => $category,
-            ),
-        ),
-    );
-    
-    return new WP_Query($args);
-}
-}
 
 /**
  * Get videos by performer
@@ -1830,4 +1795,364 @@ function customtube_get_carousel_video_data($post) {
         'buttonText'  => 'Watch Now',
         'buttonUrl'   => get_permalink($post_id),
     );
+}
+
+/**
+ * Theme option helpers
+ */
+if (!function_exists('customtube_get_options')) {
+function customtube_get_options() {
+    $defaults = array(
+        'age_verification_enabled' => true,
+        'age_verification_text' => 'This website contains adult content and is only suitable for those who are 18 years or older. Please confirm your age to continue.',
+        'age_verification_redirect' => 'https://www.google.com',
+        'age_verification_cookie_expiry' => 30,
+    );
+
+    $options = get_option('customtube_options', array());
+    return wp_parse_args($options, $defaults);
+}
+}
+
+if (!function_exists('customtube_get_option')) {
+function customtube_get_option($key, $default = null) {
+    $options = customtube_get_options();
+
+    if (isset($options[$key])) {
+        return $options[$key];
+    }
+
+    return $default;
+}
+}
+
+/**
+ * AJAX handler for retrieving liked videos
+ */
+if (!function_exists('customtube_get_liked_videos')) {
+function customtube_get_liked_videos() {
+    if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'customtube-ajax-nonce')) {
+        wp_send_json_error('Invalid nonce');
+    }
+
+    if (!is_user_logged_in()) {
+        wp_send_json_error('User not logged in');
+    }
+
+    $page = isset($_POST['page']) ? intval($_POST['page']) : 1;
+    $sort = isset($_POST['sort']) ? sanitize_text_field($_POST['sort']) : 'recent';
+    $per_page = 12;
+
+    $user_id = get_current_user_id();
+    $liked_videos = get_user_meta($user_id, 'liked_videos', true);
+    if (!is_array($liked_videos)) {
+        $liked_videos = array();
+    }
+
+    if (empty($liked_videos)) {
+        wp_send_json_success(array(
+            'videos' => array(),
+            'total' => 0,
+            'has_more' => false
+        ));
+    }
+
+    $args = array(
+        'post_type' => 'video',
+        'post_status' => 'publish',
+        'post__in' => $liked_videos,
+        'posts_per_page' => $per_page,
+        'paged' => $page,
+        'meta_query' => array(
+            array(
+                'key' => 'video_file',
+                'compare' => 'EXISTS'
+            )
+        )
+    );
+
+    switch ($sort) {
+        case 'oldest':
+            $args['orderby'] = 'date';
+            $args['order'] = 'ASC';
+            break;
+        case 'title':
+            $args['orderby'] = 'title';
+            $args['order'] = 'ASC';
+            break;
+        case 'duration':
+            $args['meta_key'] = 'video_duration';
+            $args['orderby'] = 'meta_value_num';
+            $args['order'] = 'ASC';
+            break;
+        default:
+            $args['orderby'] = 'date';
+            $args['order'] = 'DESC';
+            break;
+    }
+
+    $query = new WP_Query($args);
+    $videos = array();
+
+    if ($query->have_posts()) {
+        while ($query->have_posts()) {
+            $query->the_post();
+            $post_id = get_the_ID();
+
+            $videos[] = array(
+                'id' => $post_id,
+                'title' => get_the_title(),
+                'url' => get_permalink(),
+                'thumbnail' => get_the_post_thumbnail_url($post_id, 'video-thumbnail') ?: CUSTOMTUBE_URI . '/assets/images/default-video.jpg',
+                'duration' => get_post_meta($post_id, 'video_duration', true) ?: '0:00',
+                'views' => number_format(intval(get_post_meta($post_id, 'video_views', true))),
+                'date' => get_the_date('M j, Y'),
+                'liked' => true
+            );
+        }
+    }
+
+    wp_reset_postdata();
+
+    wp_send_json_success(array(
+        'videos' => $videos,
+        'total' => count($liked_videos),
+        'has_more' => $query->max_num_pages > $page
+    ));
+}
+}
+add_action('wp_ajax_get_liked_videos', 'customtube_get_liked_videos');
+
+/**
+ * Asset version helpers
+ */
+if (!function_exists('customtube_get_css_version')) {
+function customtube_get_css_version() {
+    $compiled_css_file = CUSTOMTUBE_DIR . '/dist/css/main.css';
+
+    if (file_exists($compiled_css_file)) {
+        return filemtime($compiled_css_file);
+    }
+
+    return CUSTOMTUBE_VERSION;
+}
+}
+
+if (!function_exists('customtube_get_js_version')) {
+function customtube_get_js_version() {
+    $compiled_js_file = CUSTOMTUBE_DIR . '/dist/js/customtube.min.js';
+
+    if (file_exists($compiled_js_file)) {
+        return filemtime($compiled_js_file);
+    }
+
+    return CUSTOMTUBE_VERSION;
+}
+}
+
+/**
+ * Page template resolver
+ */
+if (!function_exists('customtube_get_page_template')) {
+function customtube_get_page_template($page_template) {
+    $template_slug = get_page_template_slug();
+    if (empty($template_slug)) {
+        return $page_template;
+    }
+
+    $custom_template_path = CUSTOMTUBE_DIR . '/' . $template_slug;
+
+    if (file_exists($custom_template_path)) {
+        return $custom_template_path;
+    }
+
+    return $page_template;
+}
+}
+add_filter('page_template', 'customtube_get_page_template');
+
+/**
+ * Query helper: trending videos
+ */
+if (!function_exists('customtube_get_trending_videos')) {
+function customtube_get_trending_videos($count = 8) {
+    $cache_key = 'customtube_trending_videos_' . $count;
+    $query = get_transient($cache_key);
+
+    if (false === $query) {
+        $args = array(
+            'post_type'      => 'video',
+            'posts_per_page' => $count,
+            'meta_key'       => 'video_views',
+            'orderby'        => 'meta_value_num',
+            'order'          => 'DESC',
+            'post_status'    => 'publish',
+        );
+        $query = new WP_Query($args);
+        set_transient($cache_key, $query, HOUR_IN_SECONDS);
+    }
+    return $query;
+}
+}
+
+/**
+ * Query helper: recent videos
+ */
+if (!function_exists('customtube_get_recent_videos')) {
+function customtube_get_recent_videos($count = 8) {
+    $cache_key = 'customtube_recent_videos_' . $count;
+    $query = get_transient($cache_key);
+
+    if (false === $query) {
+        $args = array(
+            'post_type'      => 'video',
+            'posts_per_page' => $count,
+            'orderby'        => 'date',
+            'order'          => 'DESC',
+            'post_status'    => 'publish',
+        );
+        $query = new WP_Query($args);
+        set_transient($cache_key, $query, DAY_IN_SECONDS);
+    }
+    return $query;
+}
+}
+
+/**
+ * Query helper: videos filtered by duration
+ */
+if (!function_exists('customtube_get_videos_by_duration')) {
+function customtube_get_videos_by_duration($duration = 'medium', $count = 8) {
+    $cache_key = 'customtube_videos_duration_' . $duration . '_' . $count;
+    $query = get_transient($cache_key);
+
+    if (false === $query) {
+        $meta_query = array();
+
+        switch ($duration) {
+            case 'short':
+                $max_seconds = 300;
+                $meta_query = array(
+                    'key'     => 'duration_seconds',
+                    'value'   => $max_seconds,
+                    'compare' => '<=',
+                    'type'    => 'NUMERIC',
+                );
+                break;
+
+            case 'medium':
+                $min_seconds = 300;
+                $max_seconds = 1200;
+                $meta_query = array(
+                    'relation' => 'AND',
+                    array(
+                        'key'     => 'duration_seconds',
+                        'value'   => $min_seconds,
+                        'compare' => '>',
+                        'type'    => 'NUMERIC',
+                    ),
+                    array(
+                        'key'     => 'duration_seconds',
+                        'value'   => $max_seconds,
+                        'compare' => '<=',
+                        'type'    => 'NUMERIC',
+                    ),
+                );
+                break;
+
+            case 'long':
+                $min_seconds = 1200;
+                $meta_query = array(
+                    'key'     => 'duration_seconds',
+                    'value'   => $min_seconds,
+                    'compare' => '>',
+                    'type'    => 'NUMERIC',
+                );
+                break;
+        }
+
+        $args = array(
+            'post_type'      => 'video',
+            'posts_per_page' => $count,
+            'orderby'        => 'date',
+            'order'          => 'DESC',
+            'post_status'    => 'publish',
+        );
+
+        if (!empty($meta_query)) {
+            $args['meta_query'] = array($meta_query);
+        }
+        $query = new WP_Query($args);
+        set_transient($cache_key, $query, DAY_IN_SECONDS);
+    }
+    return $query;
+}
+}
+
+/**
+ * Query helper: videos by category
+ */
+if (!function_exists('customtube_get_videos_by_category')) {
+function customtube_get_videos_by_category($category, $count = 8) {
+    $cache_key = 'customtube_videos_category_' . (is_numeric($category) ? $category : sanitize_title($category)) . '_' . $count;
+    $query = get_transient($cache_key);
+
+    if (false === $query) {
+        $field = is_numeric($category) ? 'term_id' : 'slug';
+
+        $args = array(
+            'post_type'      => 'video',
+            'posts_per_page' => $count,
+            'orderby'        => 'date',
+            'order'          => 'DESC',
+            'post_status'    => 'publish',
+            'tax_query'      => array(
+                array(
+                    'taxonomy' => 'genre',
+                    'field'    => $field,
+                    'terms'    => $category,
+                ),
+            ),
+        );
+        $query = new WP_Query($args);
+        set_transient($cache_key, $query, DAY_IN_SECONDS);
+    }
+    return $query;
+}
+}
+
+/**
+ * Query helper: most popular categories
+ */
+if (!function_exists('customtube_get_popular_categories')) {
+function customtube_get_popular_categories($count = 8) {
+    $cache_key = 'customtube_popular_categories_' . $count;
+    $categories = get_transient($cache_key);
+
+    if (false === $categories) {
+        $categories = get_terms(array(
+            'taxonomy'   => 'genre',
+            'hide_empty' => true,
+            'number'     => $count,
+            'orderby'    => 'count',
+            'order'      => 'DESC',
+        ));
+
+        if (empty($categories) || is_wp_error($categories)) {
+            $categories = get_terms(array(
+                'taxonomy'   => 'category',
+                'hide_empty' => true,
+                'number'     => $count,
+                'orderby'    => 'count',
+                'order'      => 'DESC',
+            ));
+        }
+
+        if (empty($categories) || is_wp_error($categories)) {
+            $categories = array();
+        }
+        set_transient($cache_key, $categories, DAY_IN_SECONDS);
+    }
+    return $categories;
+}
 }
