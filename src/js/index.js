@@ -6,8 +6,11 @@
 /**
  * TEST: Confirm minified JS is loaded
  * This will output a clear message in the browser console when the minified bundle is loaded.
+ * The log runs only during development builds.
  */
-console.log('✅ CustomTube minified JS bundle file is being read.'); // Added for early check
+if (process.env.NODE_ENV === 'development') {
+    console.log('✅ CustomTube minified JS bundle file is being read.');
+}
 window.customtubeBundleLoaded = true;
 
 // Core modules
