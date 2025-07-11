@@ -37,7 +37,7 @@ Build System:
 ### 1. Install Dependencies & Build
 
 ```bash
-cd C:\Users\hp\Documents\plugins\customtube-no-plugin
+cd /path/to/customtube-theme
 npm install
 npm run build
 ```
