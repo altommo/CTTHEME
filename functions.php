@@ -891,3 +891,23 @@ add_filter('theme_page_templates', 'customtube_register_page_templates');
  * @param int $count Number of videos to retrieve
  * @return WP_Query
  */
+function customtube_get_trending_videos( $count = 10 ) {
+    $args = array(
+        'post_type'      => 'video',
+        'post_status'    => 'publish',
+        'posts_per_page' => $count,
+        'meta_query'     => array(
+            array(
+                'key'     => 'video_file',
+                'compare' => 'EXISTS',
+            ),
+        ),
+        'orderby'        => array(
+            'meta_value_num' => 'DESC',
+            'date'           => 'DESC',
+        ),
+        'meta_key'       => 'video_views',
+    );
+
+    return new WP_Query( $args );
+}
