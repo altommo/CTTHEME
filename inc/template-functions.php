@@ -1971,29 +1971,7 @@ function customtube_get_page_template($page_template) {
 }
 add_filter('page_template', 'customtube_get_page_template');
 
-/**
- * Query helper: trending videos
- */
-if (!function_exists('customtube_get_trending_videos')) {
-function customtube_get_trending_videos($count = 8) {
-    $cache_key = 'customtube_trending_videos_' . $count;
-    $query = get_transient($cache_key);
 
-    if (false === $query) {
-        $args = array(
-            'post_type'      => 'video',
-            'posts_per_page' => $count,
-            'meta_key'       => 'video_views',
-            'orderby'        => 'meta_value_num',
-            'order'          => 'DESC',
-            'post_status'    => 'publish',
-        );
-        $query = new WP_Query($args);
-        set_transient($cache_key, $query, HOUR_IN_SECONDS);
-    }
-    return $query;
-}
-}
 
 /**
  * Query helper: recent videos
