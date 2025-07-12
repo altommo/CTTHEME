@@ -36,3 +36,23 @@ If you encounter errors:
 ## Migration
 
 This version was created using the migration script in the theme directory. For details on the migration process, see MIGRATION-GUIDE.md.
+
+## Translations
+
+The theme's translatable strings live in `languages/customtube.pot`.
+
+1. Regenerate this POT file from the theme root when strings change:
+
+   ```bash
+   find . -path ./languages -prune -o -name '*.php' -print | \
+     xargs xgettext --from-code=UTF-8 -L PHP \
+       -k__ -k_e -k_x:1,2c -k_ex:1,2c -k_n:1,2 -k_nx:1,2,4c \
+       -kesc_html__ -kesc_html_e -kesc_html_x:1,2c \
+       -kesc_attr__ -kesc_attr_e -kesc_attr_x:1,2c \
+       -o languages/customtube.pot
+   ```
+
+2. Use Poedit or WP‑CLI to create `.po` and `.mo` files from `customtube.pot`.
+3. Save the resulting `.mo` files in the `languages/` directory using locale-based filenames (e.g. `customtube-fr_FR.mo`).
+
+WordPress automatically loads the correct translation based on the site language.
