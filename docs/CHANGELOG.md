@@ -33,6 +33,9 @@ This file tracks all major changes, improvements, and milestones in the CustomTu
   - Documented existing architecture
   - Mapped current features and gaps
 
+### Removed
+- 🧹 Deprecated JS files `js/main.js` and `js/block-error.js`
+
 ---
 
 ## [1.0.0] - Current Version - Adult Video Theme Base
