@@ -25,11 +25,11 @@ import { EnhancedFeatures } from './components/enhanced-features.js';
 import { AdsManager } from './components/ads.js';
 import { Carousel } from './components/carousel.js'; // Import the new Carousel component
 
-// Page-specific modules (will be created later)
-// import { HomePage } from './pages/home.js';
-// import { VideoSinglePage } from './pages/video-single.js';
-// import { PerformersPage } from './pages/performers.js';
-// import { AuthPages } = './pages/auth.js';
+// Page-specific modules
+import { HomePage } from './pages/home.js';
+import { VideoSinglePage } from './pages/video-single.js';
+import { PerformersPage } from './pages/performers.js';
+import { AuthPages } from './pages/auth.js';
 
 /**
  * Main CustomTube Application Class
@@ -249,6 +249,10 @@ class CustomTube {
         this.core.on('enhanced-features:card-activated', debounce(() => {
             this.updatePersonalizedCarousels();
         }, 1000)); // Debounce to avoid too many updates
+
+        const homePage = new HomePage(this.core);
+        homePage.init();
+        this.pageModules.set('homePage', homePage);
     }
 
     /**
@@ -345,12 +349,9 @@ class CustomTube {
         // Basic video page functionality
         this.setupVideoPageFeatures();
         
-        // TODO: Implement full VideoSinglePage module when created
-        /*
         const videoSinglePage = new VideoSinglePage(this.core);
         videoSinglePage.init();
         this.pageModules.set('videoSinglePage', videoSinglePage);
-        */
     }
 
     /**
@@ -362,12 +363,9 @@ class CustomTube {
         // Basic performers page functionality
         this.setupPerformersPageFeatures();
         
-        // TODO: Implement full PerformersPage module when created
-        /*
         const performersPage = new PerformersPage(this.core);
         performersPage.init();
         this.pageModules.set('performersPage', performersPage);
-        */
     }
 
     /**
@@ -379,12 +377,9 @@ class CustomTube {
         // Basic auth functionality
         this.setupAuthPageFeatures();
         
-        // TODO: Implement full AuthPages module when created
-        /*
         const authPages = new AuthPages(this.core);
         authPages.init();
         this.pageModules.set('authPages', authPages);
-        */
     }
 
     /**
